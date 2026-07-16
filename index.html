@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Штаб · Personal Corp — командный пункт</title>
+<style>
+  :root {
+    --bg:        oklch(0.145 0.012 258);
+    --surface:   oklch(0.185 0.014 258);
+    --raised:    oklch(0.22 0.016 258);
+    --line:      oklch(0.30 0.02 258);
+    --line-soft: oklch(0.24 0.016 258);
+    --ink:       oklch(0.93 0.005 258);
+    --muted:     oklch(0.70 0.015 258);
+    --faint:     oklch(0.55 0.015 258);
+    --cobalt:        oklch(0.68 0.13 258);
+    --cobalt-bright: oklch(0.79 0.10 258);
+    --cobalt-dim:    oklch(0.32 0.06 258);
+    --amber:  oklch(0.80 0.13 75);
+    --ok:     oklch(0.76 0.13 150);
+    --warn:   oklch(0.72 0.12 60);
+    --danger: oklch(0.64 0.19 25);
+    --sans: system-ui, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+    --z-sticky: 10; --z-dialog: 100;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.55 var(--sans);
+    background-image: radial-gradient(1200px 500px at 50% -10%, oklch(0.19 0.02 258 / 0.6), transparent 70%);
+  }
+  ::selection { background: var(--cobalt-dim); }
+  a { color: var(--cobalt-bright); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+  :focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; border-radius: 4px; }
+  .wrap { width: min(100% - 40px, 1120px); margin-inline: auto; }
+  .mono { font-family: var(--mono); }
+
+  /* ── topbar ─────────────────────────────────────── */
+  .topbar {
+    position: sticky; top: 0; z-index: var(--z-sticky);
+    background: oklch(0.185 0.014 258 / 0.88); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .topbar-in { display: flex; align-items: center; gap: 18px; padding: 11px 0; }
+  .brand { font: 700 13px/1 var(--mono); letter-spacing: 0.14em; white-space: nowrap; }
+  .brand .dim { color: var(--muted); font-weight: 400; }
+  .statusline { flex: 1; display: flex; gap: 14px; justify-content: center; font: 12.5px/1 var(--mono); color: var(--muted); white-space: nowrap; overflow: hidden; }
+  .statusline b { color: var(--ink); font-weight: 600; }
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 99px; margin-right: 6px; vertical-align: 1px; }
+  .dot.ok { background: var(--ok); } .dot.warn { background: var(--warn); } .dot.ref { background: var(--faint); }
+  .dot.amber { background: var(--amber); } .dot.cobalt { background: var(--cobalt); }
+  .topbar .actions { display: flex; gap: 9px; }
+  .btn {
+    font: 600 12.5px/1 var(--mono); letter-spacing: 0.04em; cursor: pointer;
+    color: var(--ink); background: var(--raised);
+    border: 1px solid var(--line); border-radius: 8px; padding: 9px 13px;
+    transition: border-color 0.18s cubic-bezier(0.25,1,0.5,1), background 0.18s cubic-bezier(0.25,1,0.5,1);
+  }
+  .btn:hover { border-color: var(--cobalt); background: var(--cobalt-dim); }
+  .btn-help { position: relative; color: var(--amber); border-color: oklch(0.80 0.13 75 / 0.45); }
+  .btn-help::before {
+    content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 99px;
+    background: var(--amber); margin-right: 8px; vertical-align: 1px;
+    animation: beacon 3.5s cubic-bezier(0.45,0,0.55,1) infinite;
+  }
+  .btn-help:hover { border-color: var(--amber); background: oklch(0.80 0.13 75 / 0.12); }
+  @keyframes beacon {
+    0%, 100% { opacity: 1;    box-shadow: 0 0 0 0 oklch(0.80 0.13 75 / 0.45); }
+    50%      { opacity: 0.55; box-shadow: 0 0 10px 2px oklch(0.80 0.13 75 / 0.18); }
+  }
+
+  /* ── hero ───────────────────────────────────────── */
+  .hero { padding: 72px 0 0; }
+  .hero h1 { margin: 0 0 14px; font-size: 2.35rem; line-height: 1.14; letter-spacing: -0.02em; text-wrap: balance; }
+  .hero .lead { max-width: 62ch; margin: 0; color: var(--muted); font-size: 1.06rem; }
+  .hero .lead b { color: var(--ink); font-weight: 600; }
+  .hero-meta { margin-top: 20px; font: 12.5px/1.7 var(--mono); color: var(--faint); }
+  .hero-meta b { color: var(--muted); font-weight: 500; }
+
+  .entities {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    margin-top: 42px; border-block: 1px solid var(--line-soft);
+  }
+  .entity { padding: 20px 22px 22px; }
+  .entity + .entity { border-left: 1px solid var(--line-soft); }
+  .entity .who { font: 700 13px/1 var(--mono); letter-spacing: 0.08em; }
+  .entity .role { margin-top: 9px; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+  .entity .tag { display: inline-block; margin-top: 10px; font: 11px/1 var(--mono); color: var(--faint); letter-spacing: 0.06em; }
+
+  .pagenav { display: flex; flex-wrap: wrap; gap: 6px 22px; padding: 16px 0; font: 12.5px/1.6 var(--mono); }
+  .pagenav a { color: var(--muted); }
+  .pagenav a:hover { color: var(--cobalt-bright); text-decoration: none; }
+
+  /* ── sections ───────────────────────────────────── */
+  section { padding-top: 74px; }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 8px; }
+  .sec-head h2 { margin: 0; font-size: 1.5rem; letter-spacing: -0.015em; text-wrap: balance; }
+  .src { font: 12px/1 var(--mono); color: var(--muted); white-space: nowrap; }
+  .src::before { content: "⌘ "; color: var(--faint); }
+  .sec-note { margin: 0 0 26px; max-width: 66ch; color: var(--muted); font-size: 14.5px; }
+
+  /* порядок чтения — цепочка */
+  .chain { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; }
+  .chain .link {
+    flex: 1 1 150px; min-width: 150px; position: relative;
+    background: var(--surface); border: 1px solid var(--line-soft); border-radius: 10px;
+    padding: 13px 15px 14px;
+  }
+  .chain .n { font: 700 12px/1 var(--mono); color: var(--cobalt-bright); }
+  .chain .f { display: block; margin-top: 7px; font: 600 13.5px/1.3 var(--mono); }
+  .chain .d { display: block; margin-top: 6px; font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+  .chain .arrow { align-self: center; color: var(--faint); font-family: var(--mono); }
+  .chain .link.ondemand { border-style: dashed; background: transparent; }
+  .chain .link.ondemand .n { color: var(--muted); }
+
+  /* лесенка автономности */
+  .ladder { border: 1px solid var(--line-soft); border-radius: 12px; overflow: hidden; }
+  .rung { display: grid; grid-template-columns: 118px 190px 1fr; gap: 18px; padding: 17px 20px; background: var(--surface); align-items: baseline; }
+  .rung + .rung { border-top: 1px solid var(--line-soft); }
+  .rung .code { font: 700 17px/1 var(--mono); letter-spacing: 0.03em; }
+  .rung .code small { display: block; margin-top: 6px; font: 10.5px/1.3 var(--mono); font-weight: 500; color: var(--faint); letter-spacing: 0.09em; }
+  .rung .name { font-weight: 650; font-size: 14.5px; }
+  .rung .what { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+  .rung .what .kk { font: 600 11.5px/1 var(--mono); color: var(--amber); border: 1px solid oklch(0.80 0.13 75 / 0.4); border-radius: 5px; padding: 2px 6px; white-space: nowrap; }
+  .rung[data-l="a0"] .code { color: var(--ok); }
+  .rung[data-l="a1"] .code { color: var(--cobalt-bright); }
+  .rung[data-l="a2"] .code { color: var(--warn); }
+  .rung[data-l="a3"] .code { color: var(--amber); }
+  .rung[data-l="a4"] .code { color: var(--danger); }
+  .rung[data-l="a4"] { background: oklch(0.64 0.19 25 / 0.06); }
+
+  /* протокол фактов — горизонталь */
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .fact { background: var(--surface); border: 1px solid var(--line-soft); border-radius: 10px; padding: 15px 17px; }
+  .fact .code { font: 700 14px/1 var(--mono); color: var(--cobalt-bright); }
+  .fact:first-child .code { color: var(--ok); }
+  .fact:last-child .code { color: var(--warn); }
+  .fact .t { margin-top: 8px; font-weight: 650; font-size: 14px; }
+  .fact .d { margin-top: 6px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+  .rule {
+    margin-top: 12px; padding: 13px 17px; border: 1px solid var(--line); border-radius: 10px;
+    background: var(--raised); font-size: 13.5px;
+  }
+  .rule .mono { color: var(--amber); }
+
+  /* отделы */
+  .depts { border: 1px solid var(--line-soft); border-radius: 12px; overflow: hidden; }
+  .block-head {
+    display: flex; align-items: baseline; gap: 12px; padding: 11px 20px;
+    background: var(--raised); border-top: 1px solid var(--line-soft);
+    font: 700 12px/1 var(--mono); letter-spacing: 0.1em;
+  }
+  .depts > .block-head:first-child { border-top: 0; }
+  .block-head .count { color: var(--faint); font-weight: 500; letter-spacing: 0; }
+  .block-head.ceo { color: var(--cobalt-bright); }
+  .dept { display: grid; grid-template-columns: 15px 208px 1fr auto; gap: 14px; align-items: baseline; padding: 12px 20px; background: var(--surface); border-top: 1px solid var(--line-soft); }
+  .dept .name { font: 600 13.5px/1.4 var(--mono); }
+  .dept .about { font-size: 13.5px; color: var(--muted); }
+  .dept .st { font: 11px/1 var(--mono); color: var(--faint); letter-spacing: 0.07em; }
+  .dept.hq { background: var(--cobalt-dim); }
+  .dept.hq .about { color: var(--ink); }
+
+  /* кодинг-цех */
+  .shop { border: 1px solid var(--line-soft); border-radius: 12px; background: var(--surface); padding: 24px; }
+  .shop .base { font: 12.5px/1.7 var(--mono); color: var(--muted); }
+  .shop .base b { color: var(--ink); font-weight: 600; }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; }
+  .node { border: 1px solid var(--line); border-radius: 9px; padding: 10px 14px; background: var(--raised); }
+  .node .nm { font: 700 13px/1 var(--mono); }
+  .node .fn { display: block; margin-top: 5px; font-size: 11.5px; color: var(--muted); }
+  .node.head { border-color: var(--cobalt); }
+  .node.head .nm { color: var(--cobalt-bright); }
+  .flow .fa { color: var(--faint); font-family: var(--mono); }
+  .hands { display: flex; flex-wrap: wrap; gap: 8px; }
+  .shop .note { margin: 18px 0 0; font-size: 13px; color: var(--muted); }
+
+  /* фокус */
+  .focus { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .panel { background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 22px 24px; }
+  .panel h3 { margin: 0 0 12px; font-size: 1.02rem; }
+  .panel .star { color: var(--amber); font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; }
+  .panel p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .panel p b { color: var(--ink); }
+  .tasklist { list-style: none; margin: 0; padding: 0; font-size: 14px; }
+  .tasklist li { display: flex; gap: 10px; padding: 7px 0; color: var(--muted); }
+  .tasklist li + li { border-top: 1px solid var(--line-soft); }
+  .tasklist .cb { font-family: var(--mono); }
+  .tasklist .done { color: var(--faint); text-decoration: line-through; text-decoration-color: var(--line); }
+  .tasklist .done .cb, .tasklist .cb.ok { color: var(--ok); text-decoration: none; }
+
+  /* структура */
+  .struct { display: grid; grid-template-columns: 1.25fr 1fr; gap: 12px; align-items: start; }
+  .tree-card { background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; overflow: hidden; }
+  .tree-head { padding: 10px 16px; border-bottom: 1px solid var(--line-soft); font: 11.5px/1 var(--mono); color: var(--faint); letter-spacing: 0.07em; }
+  pre.tree { margin: 0; padding: 18px 20px; overflow-x: auto; font: 12.5px/1.75 var(--mono); color: var(--muted); }
+  pre.tree .k { color: var(--ink); font-weight: 600; }
+  pre.tree .c { color: var(--faint); }
+  pre.tree .hl { color: var(--cobalt-bright); font-weight: 600; }
+  .done-when { list-style: none; margin: 0; padding: 0; font-size: 13.5px; }
+  .done-when li { display: flex; gap: 11px; padding: 9px 0; color: var(--muted); line-height: 1.5; }
+  .done-when li + li { border-top: 1px solid var(--line-soft); }
+  .done-when .m { font-family: var(--mono); font-weight: 700; }
+  .done-when .m.ok { color: var(--ok); } .done-when .m.todo { color: var(--amber); }
+
+  footer { margin-top: 90px; border-top: 1px solid var(--line-soft); padding: 26px 0 44px; font: 12px/1.8 var(--mono); color: var(--faint); }
+  footer b { color: var(--muted); font-weight: 500; }
+
+  /* ── диалог схемы ───────────────────────────────── */
+  dialog.schema {
+    z-index: var(--z-dialog);
+    width: min(100vw - 32px, 1040px); max-height: calc(100vh - 48px);
+    background: var(--raised); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 14px; padding: 0;
+  }
+  dialog.schema::backdrop { background: oklch(0.1 0.01 258 / 0.72); backdrop-filter: blur(3px); }
+  dialog.schema[open] { animation: dlg 0.2s cubic-bezier(0.25,1,0.5,1); }
+  @keyframes dlg { from { opacity: 0; transform: scale(0.975) translateY(6px); } }
+  .schema-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 15px 22px; border-bottom: 1px solid var(--line-soft); }
+  .schema-head h2 { margin: 0; font-size: 1.06rem; }
+  .schema-head .src { margin-left: auto; }
+  .schema-close { margin-left: 6px; }
+  .schema-body { padding: 10px 14px 18px; overflow: auto; }
+  .schema-body svg { display: block; width: 100%; min-width: 780px; height: auto; }
+  svg .box { fill: var(--surface); stroke: var(--line); rx: 10; }
+  svg .box.ceo { fill: var(--cobalt-dim); stroke: var(--cobalt); }
+  svg .box.owner { fill: oklch(0.80 0.13 75 / 0.09); stroke: oklch(0.80 0.13 75 / 0.55); }
+  svg .box.shop { stroke-dasharray: none; }
+  svg .box.fund { fill: transparent; stroke: var(--line-soft); stroke-dasharray: 7 5; }
+  svg text { font-family: var(--sans); fill: var(--ink); }
+  svg .tt { font: 700 14.5px var(--mono); letter-spacing: 0.06em; }
+  svg .tt.amber { fill: var(--amber); } svg .tt.cobalt { fill: var(--cobalt-bright); }
+  svg .sub { font: 12px var(--sans); fill: var(--muted); }
+  svg .lbl { font: 11px var(--mono); fill: var(--muted); }
+  svg .chipbox { fill: var(--raised); stroke: var(--line); rx: 7; }
+  svg .chip { font: 600 11.5px var(--mono); fill: var(--ink); }
+  svg .edge { stroke: var(--line); stroke-width: 1.6; fill: none; }
+  svg .edge.hot { stroke: var(--cobalt); }
+  svg .edge.up { stroke: var(--faint); stroke-dasharray: 5 4; }
+  svg .arr { fill: var(--line); } svg .arr.hot { fill: var(--cobalt); } svg .arr.up { fill: var(--faint); }
+
+  /* ── адаптив и motion ───────────────────────────── */
+  @media (max-width: 900px) {
+    .entities { grid-template-columns: 1fr 1fr; }
+    .entity:nth-child(3) { border-left: 0; }
+    .entity:nth-child(n+3) { border-top: 1px solid var(--line-soft); }
+    .facts { grid-template-columns: 1fr 1fr; }
+    .focus, .struct { grid-template-columns: 1fr; }
+    .rung { grid-template-columns: 84px 1fr; }
+    .rung .what { grid-column: 1 / -1; }
+    .statusline { display: none; }
+  }
+  @media (max-width: 620px) {
+    .topbar-in { flex-wrap: wrap; gap: 8px 10px; }
+    .brand .dim { display: none; }
+    .topbar .actions { margin-left: auto; }
+    .btn { padding: 8px 10px; }
+    .hero h1 { font-size: 1.72rem; }
+    .entities { grid-template-columns: 1fr; }
+    .entity + .entity { border-left: 0; border-top: 1px solid var(--line-soft); }
+    .dept { grid-template-columns: 15px 1fr auto; }
+    .dept .about { grid-column: 2 / -1; }
+    .facts { grid-template-columns: 1fr; }
+    section { padding-top: 56px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn-help::before { animation: none; }
+    dialog.schema[open] { animation: none; }
+    * { transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <span class="brand">ШТАБ<span class="dim"> · PolikotV · Personal Corp</span></span>
+    <span class="statusline" aria-label="Статус отделов">
+      <span><span class="dot ok"></span><b>8</b> active</span>
+      <span><span class="dot warn"></span><b>3</b> paused</span>
+      <span><span class="dot ref"></span><b>2</b> reference</span>
+      <span><span class="dot cobalt"></span>файлы первичны</span>
+    </span>
+    <span class="actions">
+      <button class="btn" id="open-schema">Схема штаба</button>
+      <a class="btn btn-help" href="help/index.html">Help</a>
+    </span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" style="padding-top:64px">
+    <h1>Командный пункт Personal Corp</h1>
+    <p class="lead">Точка входа для владельца и агентов: правила, фокус недели и карта отделов.
+      <b>Файлы штаба первичны</b> — эта страница лишь их рендер; при расхождении правится страница.</p>
+    <p class="hero-meta">~/myai/HQ · <b>AGENTS.md</b> правила · <b>structure.md</b> устройство · обновлено <b>2026-07-16</b></p>
+
+    <div class="entities" role="list">
+      <div class="entity" role="listitem">
+        <span class="who"><span class="dot amber"></span>ВЛАДЕЛЕЦ</span>
+        <p class="role">PolikotV — стратегия, деньги, риски, финальные решения.</p>
+        <span class="tag">человек · не агент</span>
+      </div>
+      <div class="entity" role="listitem">
+        <span class="who"><span class="dot cobalt"></span>КОМНАТА CEO</span>
+        <p class="role">Здесь принимаются решения: Hermes Ops — главный ассистент, дежурный агент — сессия.</p>
+        <span class="tag">= этот HQ</span>
+      </div>
+      <div class="entity" role="listitem">
+        <span class="who"><span class="dot ok"></span>ОТДЕЛЫ</span>
+        <p class="role">13 отделов в 4 блоках; у каждого свои правила AGENTS.md.</p>
+        <span class="tag">projects.md</span>
+      </div>
+      <div class="entity" role="listitem">
+        <span class="who"><span class="dot ref"></span>КОДИНГ-ЦЕХ</span>
+        <p class="role">Производство для всех отделов: Orca + OMP, конвейер Fable → руки.</p>
+        <span class="tag">structure.md</span>
+      </div>
+    </div>
+
+    <nav class="pagenav" aria-label="Разделы страницы">
+      <a href="#reading">порядок чтения</a>
+      <a href="#autonomy">автономность A0–A4</a>
+      <a href="#facts">факты Ф1–Ф4</a>
+      <a href="#depts">отделы</a>
+      <a href="#shop">кодинг-цех</a>
+      <a href="#focus">фокус</a>
+      <a href="#struct">структура</a>
+    </nav>
+  </section>
+
+  <section id="reading">
+    <div class="sec-head">
+      <h2>Порядок чтения при старте сессии</h2>
+      <span class="src">AGENTS.md §2</span>
+    </div>
+    <p class="sec-note">Реальная последовательность: правила → владелец → задачи → карта. Структура — по требованию, когда задача касается устройства системы.</p>
+    <div class="chain">
+      <div class="link"><span class="n">1</span><span class="f">AGENTS.md</span><span class="d">правила и границы агента</span></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="link"><span class="n">2</span><span class="f">me.md</span><span class="d">кто владелец, фокус, направления</span></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="link"><span class="n">3</span><span class="f">tasks.md</span><span class="d">что делаем на этой неделе</span></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="link"><span class="n">4</span><span class="f">projects.md</span><span class="d">маршрут к отделам</span></div>
+      <span class="arrow" aria-hidden="true">⇢</span>
+      <div class="link ondemand"><span class="n">по требованию</span><span class="f">structure.md</span><span class="d">ярусы, роли, цех, фундамент</span></div>
+    </div>
+  </section>
+
+  <section id="autonomy">
+    <div class="sec-head">
+      <h2>Границы автономности</h2>
+      <span class="src">AGENTS.md §7</span>
+    </div>
+    <p class="sec-note">Формализация действующих правил: чем ниже по лесенке, тем меньше свободы. Ничего нового не разрешено и не запрещено — только явные уровни.</p>
+    <div class="ladder">
+      <div class="rung" data-l="a0">
+        <span class="code">A0<small>СВОБОДНО</small></span>
+        <span class="name">Читать и искать</span>
+        <span class="what">Чтение HQ и соседних отделов · read-only инспекция (pwd, find, rg, git status/log) · поиск в памяти Engram.</span>
+      </div>
+      <div class="rung" data-l="a1">
+        <span class="code">A1<small>СДЕЛАЛ — ДОЛОЖИ</small></span>
+        <span class="name">Работать внутри HQ</span>
+        <span class="what">Файлы внутри HQ: заметки, индексы, планы, штабные доки · mem_save решений · отчёты в reports/ · коммиты по конвейеру тикетов.</span>
+      </div>
+      <div class="rung" data-l="a2">
+        <span class="code">A2<small>СНАЧАЛА ПЛАН</small></span>
+        <span class="name">Менять устройство</span>
+        <span class="what">Массовые переименования и перемещения · изменение правил штаба (AGENTS.md, structure.md) · новые отделы.</span>
+      </div>
+      <div class="rung" data-l="a3">
+        <span class="code">A3<small>ПОДТВЕРЖДЕНИЕ</small></span>
+        <span class="name">Выходить наружу</span>
+        <span class="what">Только с <span class="kk">kk</span> — запись вне HQ · push и PR · внешние отправки (посты, письма, API-мутации) · деплои и миграции · перенос персональных данных.</span>
+      </div>
+      <div class="rung" data-l="a4">
+        <span class="code">A4<small>ЗАПРЕЩЕНО</small></span>
+        <span class="name">Никогда</span>
+        <span class="what">Секреты в markdown/git/чат · выдуманное как подтверждённый факт · build-кэши как контекст · «зелёный» отчёт без запуска команды.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="facts">
+    <div class="sec-head">
+      <h2>Протокол фактов</h2>
+      <span class="src">AGENTS.md §8</span>
+    </div>
+    <p class="sec-note">Один источник правды. Агент помечает происхождение каждого факта и не повышает уровень молча.</p>
+    <div class="facts">
+      <div class="fact"><span class="code">Ф1</span><p class="t">Файл штаба / отдела</p><p class="d">Подтверждённый факт, основа решений. Один факт — один файл-владелец.</p></div>
+      <div class="fact"><span class="code">Ф2</span><p class="t">Память Engram</p><p class="d">Прошлые решения и паттерны. Могли устареть — критичное сверять с Ф1.</p></div>
+      <div class="fact"><span class="code">Ф3</span><p class="t">Контекст чата</p><p class="d">Действует только в текущей задаче. В файл — через подтверждение.</p></div>
+      <div class="fact"><span class="code">Ф4</span><p class="t">Гипотеза агента</p><p class="d">Всегда помечается как предположение. Записать как факт — нарушение A4.</p></div>
+    </div>
+    <p class="rule">Повышение <span class="mono">Ф2/Ф3/Ф4 → Ф1</span> — только проверкой (файл, команда) или подтверждением владельца <span class="mono">«kk»</span>. Молчаливое повышение — нарушение A4.</p>
+  </section>
+
+  <section id="depts">
+    <div class="sec-head">
+      <h2>Карта отделов</h2>
+      <span class="src">projects.md</span>
+    </div>
+    <p class="sec-note">Комната CEO — сам штаб; рабочие отделы живут рядом (~/myai/*) и по умолчанию read-only. 4 блока, 13 отделов.</p>
+    <div class="depts">
+      <div class="block-head ceo">КОМНАТА CEO</div>
+      <div class="dept hq"><span class="dot cobalt"></span><span class="name">HQ</span><span class="about">решения, правила, фокус, карта, отчёты · Hermes Ops + дежурный агент</span><span class="st">ЗАПИСЬ</span></div>
+
+      <div class="block-head">МАРКЕТИНГ <span class="count">· 1 · North Star</span></div>
+      <div class="dept"><span class="dot ok"></span><span class="name">marketing</span><span class="about">первый отдел: контент, Twitter/X, воронка продаж</span><span class="st">ACTIVE</span></div>
+
+      <div class="block-head">УЧЁБА <span class="count">· 1</span></div>
+      <div class="dept"><span class="dot ok"></span><span class="name">learn-personal-corp</span><span class="about">курс Personal Corp: источники, конспекты, термины, ДЗ</span><span class="st">ACTIVE</span></div>
+
+      <div class="block-head">ПРОДУКТЫ / R&amp;D <span class="count">· 9</span></div>
+      <div class="dept"><span class="dot ok"></span><span class="name">ogod</span><span class="about">самомодифицирующийся AI-агент</span><span class="st">ACTIVE</span></div>
+      <div class="dept"><span class="dot ok"></span><span class="name">paperclip</span><span class="about">operating layer вокруг Paperclip core, vault knowledge</span><span class="st">ACTIVE</span></div>
+      <div class="dept"><span class="dot ok"></span><span class="name">multica-bridge</span><span class="about">мост к Multica (трейдинг-слой)</span><span class="st">ACTIVE</span></div>
+      <div class="dept"><span class="dot ok"></span><span class="name">PROworker</span><span class="about">bot-skill: ChatGPT Pro через Vision-браузер</span><span class="st">ACTIVE</span></div>
+      <div class="dept"><span class="dot ok"></span><span class="name">claude-telegram-bot</span><span class="about">Claude Code как ассистент в Telegram</span><span class="st">ACTIVE</span></div>
+      <div class="dept"><span class="dot warn"></span><span class="name">vibe-kanban</span><span class="about">оркестрация / канбан для кодинг-агентов</span><span class="st">PAUSED</span></div>
+      <div class="dept"><span class="dot warn"></span><span class="name">Jarvis</span><span class="about">личный ассистент-агент (Telegram brain)</span><span class="st">PAUSED</span></div>
+      <div class="dept"><span class="dot warn"></span><span class="name">bachata tracker</span><span class="about">трекер / UI для бачаты</span><span class="st">PAUSED</span></div>
+      <div class="dept"><span class="dot ref"></span><span class="name">Xboost</span><span class="about">лендинг + админка X-boosting сервиса</span><span class="st">REFERENCE</span></div>
+
+      <div class="block-head">ОПЕРАЦИИ / ИНФРА <span class="count">· 2 + цех</span></div>
+      <div class="dept"><span class="dot ok"></span><span class="name">openclaw</span><span class="about">Hermes/OpenClaw — 24/7 оркестратор, мониторинги, алерты</span><span class="st">ACTIVE</span></div>
+      <div class="dept"><span class="dot ref"></span><span class="name">RoutingMainKeys</span><span class="about">ключи и роутинг моделей (CLIProxyAPI)</span><span class="st">REFERENCE</span></div>
+    </div>
+  </section>
+
+  <section id="shop">
+    <div class="sec-head">
+      <h2>Кодинг-цех</h2>
+      <span class="src">structure.md</span>
+    </div>
+    <p class="sec-note">Производственный контур для всех отделов. Роли — по назначению; модели внутри ролей взаимозаменяемы.</p>
+    <div class="shop">
+      <p class="base"><b>Orca</b> — главный инструмент (среда управления агентами и worktree) · <b>OMP</b> (Oh My Pi) — в процессе</p>
+      <div class="flow">
+        <div class="node head"><span class="nm">Fable</span><span class="fn">план · скоуп · вердикты · приёмка</span></div>
+        <span class="fa" aria-hidden="true">→</span>
+        <div class="hands">
+          <div class="node"><span class="nm">Codex</span><span class="fn">исполнение</span></div>
+          <div class="node"><span class="nm">Grok</span><span class="fn">разведка · DoD</span></div>
+          <div class="node"><span class="nm">Opus</span><span class="fn">адверсариальное ревью</span></div>
+          <div class="node"><span class="nm">gh</span><span class="fn">журнал · issues</span></div>
+        </div>
+      </div>
+      <p class="note">Проверяет не тот, кто делал: исполнение, DoD-приёмка и ревью — разные руки.</p>
+    </div>
+  </section>
+
+  <section id="focus">
+    <div class="sec-head">
+      <h2>Фокус</h2>
+      <span class="src">me.md · tasks.md</span>
+    </div>
+    <div class="focus">
+      <div class="panel">
+        <h3><span class="star">NORTH STAR · 2026</span></h3>
+        <p><b>Полностью автономный маркетинговый отдел</b> с контентом и воронкой продаж + отдел контроля у клиента. Ближайший шаг: штаб поднят, первый отдел — маркетинг.</p>
+      </div>
+      <div class="panel">
+        <h3>Неделя</h3>
+        <ul class="tasklist">
+          <li class="done"><span class="cb">[x]</span>Собрать штаб L1: AGENTS / me / projects / tasks + симлинк</li>
+          <li class="done"><span class="cb">[x]</span>Завести отдел «Маркетинг» и вписать в projects.md</li>
+          <li class="done"><span class="cb">[x]</span>Домашка L1: сайт штаба (главная · схема · Помощь · отчёт)</li>
+          <li><span class="cb">[ ]</span>Отправить ДЗ в топик (HTML: отчёт + конспект)</li>
+          <li><span class="cb">[ ]</span>Objectives / KR под North Star</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="struct">
+    <div class="sec-head">
+      <h2>Структура штаба и готовность</h2>
+      <span class="src">structure.md · ДЗ L1</span>
+    </div>
+    <div class="struct">
+      <div class="tree-card">
+        <div class="tree-head">~/myai/HQ · tree</div>
+        <pre class="tree">HQ/
+├── <span class="k">AGENTS.md</span>            <span class="c">← правила: A0–A4 · Ф1–Ф4 · маршруты</span>
+├── CLAUDE.md → AGENTS.md
+├── <span class="k">me.md</span> · <span class="k">tasks.md</span>     <span class="c">← владелец · фокус недели</span>
+├── <span class="k">projects.md</span>          <span class="c">← 13 отделов · 4 блока</span>
+├── <span class="k">structure.md</span>         <span class="c">← ярусы · роли · цех · фундамент</span>
+├── <span class="hl">index.html</span>           <span class="c">← этот командный пункт</span>
+├── <span class="hl">help/</span>                <span class="c">← учебная карта недели 00–07</span>
+├── learn-personal-corp/ <span class="c">← учебный отдел: источники · конспекты</span>
+├── docs/agents/         <span class="c">← спеки · трекер (GitHub Issues)</span>
+└── reports/ · _archive/
+
+<span class="c">соседние отделы — рядом: ~/myai/marketing · ogod · openclaw · …</span></pre>
+      </div>
+      <div class="panel">
+        <h3>Готово, когда</h3>
+        <ul class="done-when">
+          <li><span class="m ok">✓</span>Правила зафиксированы: A0–A4 + Ф1–Ф4 в AGENTS.md</li>
+          <li><span class="m ok">✓</span>Устройство описано в structure.md, блоки — в projects.md</li>
+          <li><span class="m ok">✓</span>Учебный отдел связан со штабом (projects.md)</li>
+          <li><span class="m ok">✓</span>Сайт штаба соответствует файлам-источникам</li>
+          <li><span class="m todo">☐</span>ДЗ отправлено в топик (HTML-файлы: отчёт + конспект) — за владельцем</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>ШТАБ · Personal Corp</b> · файлы первичны, страница — рендер · трекер: GitHub Issues (HQ) · собрано дежурным агентом (Fable 5) · 2026-07-16
+  </div>
+</footer>
+
+<dialog class="schema" id="schema" aria-label="Схема штаба">
+  <div class="schema-head">
+    <h2>Схема штаба</h2>
+    <span class="src">structure.md</span>
+    <button class="btn schema-close" id="close-schema" autofocus>Закрыть · Esc</button>
+  </div>
+  <div class="schema-body">
+    <svg viewBox="0 0 980 664" role="img" aria-label="Ярусы штаба: Владелец, Комната CEO, четыре блока отделов, кодинг-цех, фундамент">
+      <defs>
+        <marker id="m" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="arr"/></marker>
+        <marker id="mh" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="arr hot"/></marker>
+        <marker id="mu" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="arr up"/></marker>
+      </defs>
+
+      <!-- ярус 0: владелец -->
+      <rect class="box owner" x="310" y="18" width="360" height="64" rx="10"/>
+      <text class="tt amber" x="490" y="44" text-anchor="middle">ВЛАДЕЛЕЦ · PolikotV</text>
+      <text class="sub" x="490" y="64" text-anchor="middle">человек · стратегия · деньги · риски · финальные решения</text>
+
+      <!-- потоки решения/отчёты -->
+      <line class="edge hot" x1="462" y1="82" x2="462" y2="126" marker-end="url(#mh)"/>
+      <text class="lbl" x="452" y="108" text-anchor="end">решения</text>
+      <line class="edge up" x1="518" y1="126" x2="518" y2="82" marker-end="url(#mu)"/>
+      <text class="lbl" x="528" y="108">отчёты</text>
+
+      <!-- ярус 1: комната CEO -->
+      <rect class="box ceo" x="240" y="128" width="500" height="118" rx="10"/>
+      <text class="tt cobalt" x="264" y="156">КОМНАТА CEO · HQ</text>
+      <text class="sub" x="264" y="176">правила · фокус · карта отделов · отчёты · память</text>
+      <rect class="chipbox" x="264" y="190" width="228" height="38"/>
+      <text class="chip" x="278" y="206">Hermes Ops</text>
+      <text class="sub" x="278" y="221" style="font-size:10.5px">главный ассистент · 24/7 · Telegram</text>
+      <rect class="chipbox" x="504" y="190" width="212" height="38"/>
+      <text class="chip" x="518" y="206">дежурный агент</text>
+      <text class="sub" x="518" y="221" style="font-size:10.5px">текущая сессия · по AGENTS.md</text>
+
+      <!-- рёбра к блокам -->
+      <line class="edge" x1="330" y1="246" x2="150" y2="298" marker-end="url(#m)"/>
+      <line class="edge" x1="430" y1="246" x2="380" y2="298" marker-end="url(#m)"/>
+      <line class="edge" x1="550" y1="246" x2="600" y2="298" marker-end="url(#m)"/>
+      <line class="edge" x1="650" y1="246" x2="830" y2="298" marker-end="url(#m)"/>
+
+      <!-- ярус 2: блоки -->
+      <g>
+        <rect class="box" x="40" y="300" width="220" height="96" rx="10"/>
+        <text class="tt" x="58" y="328" style="font-size:13px">МАРКЕТИНГ</text>
+        <text class="sub" x="58" y="348">marketing — первый отдел</text>
+        <text class="sub" x="58" y="366">контент · X · воронка</text>
+        <text class="lbl" x="58" y="384">● 1 active · North Star</text>
+      </g>
+      <g>
+        <rect class="box" x="272" y="300" width="220" height="96" rx="10"/>
+        <text class="tt" x="290" y="328" style="font-size:13px">УЧЁБА</text>
+        <text class="sub" x="290" y="348">learn-personal-corp</text>
+        <text class="sub" x="290" y="366">курс · конспекты · ДЗ</text>
+        <text class="lbl" x="290" y="384">● 1 active</text>
+      </g>
+      <g>
+        <rect class="box" x="504" y="300" width="220" height="96" rx="10"/>
+        <text class="tt" x="522" y="328" style="font-size:13px">ПРОДУКТЫ / R&amp;D</text>
+        <text class="sub" x="522" y="348">ogod · paperclip · multica ·</text>
+        <text class="sub" x="522" y="366">PROworker · tg-bot · …</text>
+        <text class="lbl" x="522" y="384">● 5 active · ◐ 3 · ○ 1</text>
+      </g>
+      <g>
+        <rect class="box" x="736" y="300" width="204" height="96" rx="10"/>
+        <text class="tt" x="754" y="328" style="font-size:13px">ОПЕРАЦИИ / ИНФРА</text>
+        <text class="sub" x="754" y="348">openclaw — Hermes 24/7</text>
+        <text class="sub" x="754" y="366">RoutingMainKeys — ключи</text>
+        <text class="lbl" x="754" y="384">● 1 active · ○ 1</text>
+      </g>
+
+      <!-- рёбра к цеху -->
+      <line class="edge" x1="150" y1="396" x2="330" y2="452" marker-end="url(#m)"/>
+      <line class="edge" x1="382" y1="396" x2="430" y2="452" marker-end="url(#m)"/>
+      <line class="edge" x1="614" y1="396" x2="560" y2="452" marker-end="url(#m)"/>
+      <line class="edge" x1="838" y1="396" x2="660" y2="452" marker-end="url(#m)"/>
+      <text class="lbl" x="490" y="432" text-anchor="middle">заказы на код — из любого отдела</text>
+
+      <!-- цех -->
+      <rect class="box shop" x="240" y="454" width="500" height="102" rx="10"/>
+      <text class="tt" x="264" y="482" style="font-size:13px">⚙ КОДИНГ-ЦЕХ</text>
+      <text class="sub" x="264" y="502">Orca — главный инструмент · OMP (Oh My Pi) — в процессе</text>
+      <text class="sub" x="264" y="522">конвейер: <tspan class="chip">Fable</tspan> → <tspan class="chip">Codex</tspan> исполнение · <tspan class="chip">Grok</tspan> разведка/DoD ·</text>
+      <text class="sub" x="264" y="540"><tspan class="chip">Opus</tspan> ревью · <tspan class="chip">gh</tspan> журнал — проверяет не тот, кто делал</text>
+
+      <!-- фундамент -->
+      <rect class="box fund" x="40" y="586" width="900" height="60" rx="10"/>
+      <text class="tt" x="60" y="612" style="font-size:12px">ФУНДАМЕНТ</text>
+      <text class="sub" x="60" y="632">Engram — живая память · MAP.md — индекс вэлта · оркстек: Graphify / orient / Serena / rg · RoutingMainKeys — ключи · GBrain — legacy, read-only</text>
+    </svg>
+  </div>
+</dialog>
+
+<script>
+  (function () {
+    var dlg = document.getElementById('schema');
+    document.getElementById('open-schema').addEventListener('click', function () { dlg.showModal(); });
+    document.getElementById('close-schema').addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) {
+      var r = dlg.getBoundingClientRect();
+      var inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      if (!inside) dlg.close();
+    });
+  })();
+</script>
+</body>
+</html>

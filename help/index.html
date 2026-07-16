@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Помощь · Неделя 01 — учебная карта · Штаб Personal Corp</title>
+<style>
+  :root {
+    --bg:        oklch(0.145 0.012 258);
+    --surface:   oklch(0.185 0.014 258);
+    --raised:    oklch(0.22 0.016 258);
+    --line:      oklch(0.30 0.02 258);
+    --line-soft: oklch(0.24 0.016 258);
+    --ink:       oklch(0.93 0.005 258);
+    --muted:     oklch(0.70 0.015 258);
+    --faint:     oklch(0.55 0.015 258);
+    --cobalt:        oklch(0.68 0.13 258);
+    --cobalt-bright: oklch(0.79 0.10 258);
+    --cobalt-dim:    oklch(0.32 0.06 258);
+    --amber:  oklch(0.80 0.13 75);
+    --ok:     oklch(0.76 0.13 150);
+    --warn:   oklch(0.72 0.12 60);
+    --danger: oklch(0.64 0.19 25);
+    --sans: system-ui, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--sans);
+    background-image: radial-gradient(1100px 460px at 60% -10%, oklch(0.19 0.02 258 / 0.55), transparent 70%);
+  }
+  ::selection { background: var(--cobalt-dim); }
+  a { color: var(--cobalt-bright); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+  :focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; border-radius: 4px; }
+  .mono { font-family: var(--mono); }
+
+  .app { display: grid; grid-template-columns: 268px minmax(0, 1fr); max-width: 1280px; margin: 0 auto; min-height: 100vh; }
+
+  /* ── сайдбар ────────────────────────────────────── */
+  .side { position: sticky; top: 0; height: 100vh; overflow-y: auto; border-right: 1px solid var(--line-soft); padding: 26px 0 40px; }
+  .side .back { display: inline-block; margin: 0 22px 20px; font: 600 12px/1 var(--mono); color: var(--muted); }
+  .side .back:hover { color: var(--cobalt-bright); text-decoration: none; }
+  .side .brand { padding: 0 22px 20px; }
+  .side .brand b { display: block; font: 700 19px/1.2 var(--mono); letter-spacing: 0.1em; }
+  .side .brand small { display: block; margin-top: 8px; font: 10.5px/1.6 var(--mono); color: var(--faint); letter-spacing: 0.1em; }
+  .track { display: flex; flex-direction: column; }
+  .track a {
+    display: grid; grid-template-columns: 34px 1fr; gap: 8px; align-items: center;
+    min-height: 44px; padding: 8px 22px; color: var(--muted); font-size: 14px;
+    border-left: 2px solid transparent;
+    transition: background 0.16s cubic-bezier(0.25,1,0.5,1), color 0.16s cubic-bezier(0.25,1,0.5,1);
+  }
+  .track a:hover { background: var(--surface); color: var(--ink); text-decoration: none; }
+  .track a.active { color: var(--ink); font-weight: 650; border-left-color: var(--cobalt); background: var(--surface); }
+  .track .n { font: 600 12px/1 var(--mono); color: var(--faint); }
+  .track a.active .n { color: var(--cobalt-bright); }
+  .side .meta { margin: 26px 22px 0; padding-top: 18px; border-top: 1px solid var(--line-soft); font: 11px/1.8 var(--mono); color: var(--faint); }
+
+  /* ── main ───────────────────────────────────────── */
+  main { min-width: 0; padding: 34px 46px 80px; }
+  .screen { display: none; }
+  .screen.active { display: block; animation: fade 0.22s cubic-bezier(0.25,1,0.5,1); }
+  @keyframes fade { from { opacity: 0; transform: translateY(5px); } }
+  .topline { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 14px; margin-bottom: 28px; border-bottom: 1px solid var(--line-soft); }
+  .topline .where { font: 11.5px/1 var(--mono); color: var(--faint); letter-spacing: 0.1em; }
+  .nav-arrows { display: flex; gap: 8px; }
+  .arrow { width: 38px; height: 38px; cursor: pointer; color: var(--ink); background: var(--raised); border: 1px solid var(--line); border-radius: 8px; font: 15px var(--mono); transition: border-color 0.16s; }
+  .arrow:hover { border-color: var(--cobalt); }
+  .num { font: 700 44px/1 var(--mono); color: var(--cobalt); }
+  h1 { margin: 12px 0 14px; max-width: 24ch; font-size: 1.9rem; line-height: 1.16; letter-spacing: -0.018em; text-wrap: balance; }
+  .intro { max-width: 66ch; margin: 0 0 28px; color: var(--muted); font-size: 15.5px; line-height: 1.62; }
+  .intro b { color: var(--ink); font-weight: 600; }
+  h2 { margin: 0 0 10px; font-size: 1.12rem; }
+  h3 { margin: 0 0 10px; font-size: 0.98rem; }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+  .grid .wide { grid-column: 1 / -1; }
+  .card { min-width: 0; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 20px 22px; }
+  .card p, .card li { font-size: 14px; line-height: 1.58; color: var(--muted); }
+  .card p { margin: 0; }
+  .card p + p { margin-top: 8px; }
+  .card b { color: var(--ink); }
+  ul, ol { margin: 0; padding-left: 20px; }
+  li + li { margin-top: 7px; }
+
+  .callout { background: var(--raised); border: 1px solid var(--line); border-radius: 12px; padding: 18px 22px; }
+  .callout .mark { font: 700 11px/1 var(--mono); color: var(--amber); letter-spacing: 0.12em; }
+  .callout p { margin: 8px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+  .callout p b { color: var(--ink); }
+  .key { margin-top: 12px; padding: 12px 15px; border-radius: 9px; background: var(--cobalt-dim); font-weight: 600; font-size: 14px; }
+
+  .steps { list-style: none; padding: 0; counter-reset: s; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 30px 1fr; gap: 10px; }
+  .steps li::before { content: counter(s, decimal-leading-zero); font: 600 12.5px/1.7 var(--mono); color: var(--cobalt-bright); }
+
+  .factrow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 14px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 10px; overflow: hidden; }
+  .factrow .f { background: var(--surface); padding: 13px 15px; min-width: 0; }
+  .factrow small { display: block; margin-bottom: 6px; font: 10px/1.4 var(--mono); color: var(--faint); letter-spacing: 0.1em; }
+  .factrow b { font-size: 13.5px; }
+
+  table.cmp { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .cmp th { text-align: left; padding: 9px 10px; font: 600 10.5px/1.4 var(--mono); color: var(--faint); letter-spacing: 0.1em; border-bottom: 1px solid var(--line); }
+  .cmp td { padding: 10px; border-bottom: 1px solid var(--line-soft); vertical-align: top; line-height: 1.5; }
+  .cmp td:first-child { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; color: var(--ink); }
+  .cmp td { color: var(--muted); }
+  .cmp tr:last-child td { border-bottom: 0; }
+  .cmp .ours { color: var(--cobalt-bright); font-family: var(--mono); font-size: 12px; }
+  .scroll { overflow-x: auto; }
+
+  pre.tree { margin: 0; padding: 16px 18px; overflow-x: auto; font: 12.5px/1.75 var(--mono); color: var(--muted); background: var(--raised); border-radius: 10px; }
+  pre.tree .k { color: var(--ink); font-weight: 600; }
+  pre.tree .c { color: var(--faint); }
+
+  details.qa { border: 1px solid var(--line-soft); border-radius: 10px; background: var(--surface); }
+  details.qa + details.qa { margin-top: 8px; }
+  details.qa summary { cursor: pointer; list-style: none; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: baseline; padding: 13px 17px; font-weight: 600; font-size: 14px; }
+  details.qa summary::-webkit-details-marker { display: none; }
+  details.qa summary .who { font: 500 11px/1 var(--mono); color: var(--faint); white-space: nowrap; }
+  details.qa summary::after { content: "+"; grid-column: 3; font: 400 15px var(--mono); color: var(--faint); }
+  details.qa[open] summary::after { content: "–"; }
+  details.qa .a { padding: 0 17px 15px; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  details.qa .a b { color: var(--ink); }
+
+  .qbank { columns: 2; column-gap: 26px; font-size: 13.5px; color: var(--muted); }
+  .qbank li { break-inside: avoid; margin: 0 0 8px; line-height: 1.5; }
+
+  .prompt { background: var(--raised); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .prompt + .prompt { margin-top: 10px; }
+  .prompt .ph { padding: 9px 15px; border-bottom: 1px solid var(--line-soft); font: 600 11.5px/1 var(--mono); color: var(--muted); letter-spacing: 0.05em; }
+  .prompt pre { margin: 0; padding: 13px 15px; overflow-x: auto; font: 12.5px/1.65 var(--mono); color: var(--ink); white-space: pre-wrap; }
+
+  .glossary td:nth-child(2) { color: var(--ink); }
+
+  .hw-check { list-style: none; padding: 0; font-size: 14px; }
+  .hw-check li { display: flex; gap: 11px; padding: 8px 0; color: var(--muted); line-height: 1.55; }
+  .hw-check li + li { border-top: 1px solid var(--line-soft); }
+  .hw-check .m { font: 700 13px/1.6 var(--mono); }
+  .hw-check .m.ok { color: var(--ok); } .hw-check .m.todo { color: var(--amber); }
+
+  .ov-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
+  .ov { text-align: left; cursor: pointer; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px 18px; color: var(--ink); font: inherit; transition: border-color 0.16s, transform 0.18s cubic-bezier(0.25,1,0.5,1); }
+  .ov:hover { border-color: var(--cobalt); transform: translateY(-2px); }
+  .ov .n { font: 700 13px/1 var(--mono); color: var(--cobalt-bright); }
+  .ov h2 { margin: 9px 0 6px; font-size: 15px; }
+  .ov p { margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+  @media (max-width: 940px) {
+    .app { grid-template-columns: 1fr; }
+    .side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line-soft); padding: 16px 0 0; }
+    .side .brand { display: none; }
+    .side .meta { display: none; }
+    .side .back { margin: 0 16px 12px; }
+    .track { flex-direction: row; overflow-x: auto; padding-bottom: 6px; }
+    .track a { flex: 0 0 auto; min-height: 40px; padding: 8px 14px; border-left: 0; border-bottom: 2px solid transparent; }
+    .track a.active { border-left: 0; border-bottom-color: var(--cobalt); }
+    main { padding: 24px 18px 60px; }
+    .grid { grid-template-columns: 1fr; }
+    .factrow { grid-template-columns: 1fr 1fr; }
+    .qbank { columns: 1; }
+    h1 { font-size: 1.5rem; }
+    .num { font-size: 34px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .screen.active { animation: none; }
+    * { transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+<aside class="side">
+  <a class="back" href="../index.html">← ШТАБ</a>
+  <div class="brand">
+    <b>ПОМОЩЬ</b>
+    <small>PERSONAL CORP · НЕДЕЛЯ 01<br>УРОК + WORKSHOP</small>
+  </div>
+  <nav class="track" aria-label="Разделы карты">
+    <a data-i="0" href="#overview"><span class="n">00</span><span>Обзор</span></a>
+    <a data-i="1" href="#goals"><span class="n">01</span><span>Цель и задачи</span></a>
+    <a data-i="2" href="#tools"><span class="n">02</span><span>Инструменты</span></a>
+    <a data-i="3" href="#practice"><span class="n">03</span><span>Практика</span></a>
+    <a data-i="4" href="#folders"><span class="n">04</span><span>Архитектура</span></a>
+    <a data-i="5" href="#terms"><span class="n">05</span><span>Термины</span></a>
+    <a data-i="6" href="#questions"><span class="n">06</span><span>Вопросы</span></a>
+    <a data-i="7" href="#homework"><span class="n">07</span><span>Домашняя работа</span></a>
+  </nav>
+  <div class="meta">источники: pc_l1.md (SHA-256 ✓)<br>материалы отдела · карта недели<br>стиль: DESIGN.md штаба</div>
+</aside>
+
+<main>
+
+<!-- 00 ─────────────────────────────────────────────── -->
+<section class="screen" id="overview" data-title="overview">
+  <div class="topline"><span class="where">НЕДЕЛЯ 01 · УРОК 1/8 + WORKSHOP</span>
+    <span class="nav-arrows"><button class="arrow prev" aria-label="Назад">←</button><button class="arrow next" aria-label="Вперёд">→</button></span></div>
+  <div class="num">00</div>
+  <h1>Собрать первый управляемый контур работы с AI-агентами</h1>
+  <p class="intro">Неделя не про «автоматизировать всё» и не про выбор лучшей модели. Основной урок — создать <b>штаб и первый отдел</b>, которые хранят контекст и маршрутизируют работу. Workshop — путь от сырой идеи до проверяемой реализации: интервью → спецификация → тикеты.</p>
+  <div class="callout">
+    <span class="mark">ГЛАВНАЯ МЫСЛЬ</span>
+    <p>Качество работы агента определяется не эффектным промптом, а <b>доступным контекстом, правилами, границами</b> и качеством постановки задачи.</p>
+    <div class="key">Сначала понять и описать работу → затем автоматизировать.</div>
+  </div>
+  <div style="height:22px"></div>
+  <div class="ov-grid">
+    <button class="ov" data-go="1"><span class="n">01</span><h2>Цель и задачи</h2><p>Что требовалось собрать к концу недели.</p></button>
+    <button class="ov" data-go="2"><span class="n">02</span><h2>Инструменты</h2><p>Роли инструментов — и что из этого уже стоит у нас.</p></button>
+    <button class="ov" data-go="3"><span class="n">03</span><h2>Практика</h2><p>Управляемый вайбкодинг: интервью → спека → тикеты.</p></button>
+    <button class="ov" data-go="4"><span class="n">04</span><h2>Архитектура</h2><p>Рекомендация урока и наш реальный штаб.</p></button>
+    <button class="ov" data-go="5"><span class="n">05</span><h2>Термины</h2><p>30 терминов недели из нашего глоссария.</p></button>
+    <button class="ov" data-go="7"><span class="n">07</span><h2>Домашняя работа</h2><p>Что задано, что готово, как сдавать.</p></button>
+  </div>
+</section>
+
+<!-- 01 ─────────────────────────────────────────────── -->
+<section class="screen" id="goals" data-title="goals">
+  <div class="topline"><span class="where">ОСНОВНОЙ УРОК · РЕЗУЛЬТАТ НЕДЕЛИ</span>
+    <span class="nav-arrows"><button class="arrow prev">←</button><button class="arrow next">→</button></span></div>
+  <div class="num">01</div>
+  <h1>Цель и задачи первой недели</h1>
+  <p class="intro">Собрать минимальный работающий контекст: агент понимает владельца, видит активные направления и безопасно переходит к работе в нужном отделе.</p>
+  <div class="grid">
+    <div class="card"><h3>Цель</h3><p>Перейти от отдельных диалогов с AI к системе, где контекст сохраняется в файлах и переиспользуется между сессиями.</p></div>
+    <div class="card"><h3>Не цель</h3><p>Не автоматизировать всё сразу, не переносить все проекты в одну папку, не строить идеальную организацию до практики.</p></div>
+    <div class="card wide"><h3>Задачи недели</h3>
+      <ol class="steps">
+        <li><span><b>Создать первый отдел</b> и понять, чем отдел отличается от отдельного чата.</span></li>
+        <li><span><b>Создать HQ</b> — папку, из которой начинается работа и виден текущий фокус.</span></li>
+        <li><span><b>Зафиксировать правила</b>, которые агент читает до просмотра остальных файлов.</span></li>
+        <li><span><b>Добавить ссылки на проекты</b>, не перенося их внутрь штаба.</span></li>
+        <li><span><b>Подготовить доказательство</b>: структура штаба и связь учебного отдела (у нас — самодостаточные HTML-страницы).</span></li>
+      </ol>
+    </div>
+  </div>
+  <div class="factrow">
+    <div class="f"><small>ФОРМАТ</small><b>недельный спринт</b></div>
+    <div class="f"><small>ОСНОВНАЯ СУЩНОСТЬ</small><b>отдел</b></div>
+    <div class="f"><small>ТОЧКА ВХОДА</small><b>HQ</b></div>
+    <div class="f"><small>ДЕДЛАЙН</small><b>воскресенье</b></div>
+  </div>
+</section>
+
+<!-- 02 ─────────────────────────────────────────────── -->
+<section class="screen" id="tools" data-title="tools">
+  <div class="topline"><span class="where">SETUP · МОДЕЛИ · РАБОЧАЯ СРЕДА</span>
+    <span class="nav-arrows"><button class="arrow prev">←</button><button class="arrow next">→</button></span></div>
+  <div class="num">02</div>
+  <h1>Инструменты: не список моды, а роли в системе</h1>
+  <p class="intro">Выбирать инструмент — от ограничения, которое уже возникло в работе. Если ограничения нет, лишняя обвязка только усложняет setup. Третья колонка — <b>что уже стоит в нашем штабе</b>.</p>
+  <div class="scroll">
+    <table class="cmp">
+      <thead><tr><th>ИНСТРУМЕНТ</th><th>КАКУЮ ЗАДАЧУ РЕШАЕТ</th><th>У НАС</th></tr></thead>
+      <tbody>
+        <tr><td>Codex / Claude Code</td><td>Основные кодинг-агенты: читают файлы, создают структуру, выполняют задачи.</td><td class="ours">дежурный агент штаба (Fable 5) · Codex — руки цеха</td></tr>
+        <tr><td>Orca</td><td>Среда управления агентами и файлами: модели, папки, терминалы, worktree.</td><td class="ours">главный инструмент кодинг-цеха · + OMP в процессе</td></tr>
+        <tr><td>GitHub</td><td>Не только код: память, версии, база знаний и задачи для агентов.</td><td class="ours">трекер штаба — Issues репо HQ</td></tr>
+        <tr><td>Cursor / Composer</td><td>Агентная среда; на workshop Composer оркестрировал и делегировал задачи.</td><td class="ours">аналог — конвейер Fable → руки</td></tr>
+        <tr><td>Gemini / Grok / Fable</td><td>Разные модели под разные сильные стороны: vision, скорость, планирование.</td><td class="ours">Fable — план/приёмка · Grok — разведка · Opus — ревью</td></tr>
+        <tr><td>v0 / Lovable / Replit</td><td>Быстрый интерфейс из описания; качество всё равно решает спецификация.</td><td class="ours">не используем — страницы собирает цех</td></tr>
+        <tr><td>Devin Wiki</td><td>Автоинвентаризация большого существующего проекта, документация.</td><td class="ours">аналог — Graphify (граф репо) в оркстеке</td></tr>
+        <tr><td>Skills</td><td>Повторяемые процедуры: интервью, спека, тикеты, реализация.</td><td class="ours">стоят глобально: grill-me · to-spec · to-tickets · tdd …</td></tr>
+        <tr><td>Диктофон + транскрипт</td><td>Захват сырой идеи голосом → текст → grill-me.</td><td class="ours">транскрипты уроков — источники отдела учёбы</td></tr>
+        <tr><td>Память агента</td><td>Контекст между сессиями, решения и паттерны.</td><td class="ours">Engram — фундамент штаба (Ф2)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="height:14px"></div>
+  <div class="callout">
+    <span class="mark">ОГРАНИЧЕНИЕ</span>
+    <p>Параллельные дорогие модели быстро сжигают лимиты: на workshop у части агентов закончились токены. Оркестратор не отменяет лимиты подписок — поэтому в нашем цехе роли распределены по моделям, а Fable бережёт свой контекст.</p>
+  </div>
+</section>
+
+<!-- 03 ─────────────────────────────────────────────── -->
+<section class="screen" id="practice" data-title="practice">
+  <div class="topline"><span class="where">WORKSHOP · УПРАВЛЯЕМЫЙ ВАЙБКОДИНГ</span>
+    <span class="nav-arrows"><button class="arrow prev">←</button><button class="arrow next">→</button></span></div>
+  <div class="num">03</div>
+  <h1>Практика: провести идею через четыре контрольные точки</h1>
+  <p class="intro">Свободный запрос «сделай сайт про меня» сравнили с управляемым процессом. Второй дольше на старте, но проверяет намерение <b>до</b> дорогой реализации.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Механика</h3>
+      <ol class="steps">
+        <li><span><b>grill-me</b> — агент задаёт вопросы по одному и вытаскивает недостающий контекст.</span></li>
+        <li><span><b>to-spec</b> — ответы превращаются в спеку (PRD): согласованное описание результата.</span></li>
+        <li><span><b>to-tickets</b> — спека раскладывается на маленькие зависимые задачи.</span></li>
+        <li><span><b>implement</b> — агент берёт тикет, реализует и проверяет его.</span></li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>Как этот процесс прошёл у нас</h3>
+      <ul>
+        <li>grill-сессия: ~10 вопросов владельцу о структуре штаба, ролях, уровнях;</li>
+        <li>спека — issue #1 репозитория HQ (+ канон в docs/agents/specs/);</li>
+        <li>6 тикетов #2–#7 с зависимостями в GitHub Issues;</li>
+        <li>реализация: дизайн — Fable, простые задачи — руки (Opus), ревью — отдельной моделью.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Практические выводы</h3>
+      <ul>
+        <li>Интервью полезно, когда идея сырая и требования ещё не сформулированы.</li>
+        <li>Спецификация — место согласования до изменений в файлах.</li>
+        <li>Тикеты дают зависимости и возможность вернуться после паузы.</li>
+        <li>Для большого существующего проекта сначала — инвентаризация и wiki.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Ограничения и риски</h3>
+      <ul>
+        <li>Плохие ответы на интервью дают подробную, но неверную спеку.</li>
+        <li>Слишком общий PRD приводит к шаблонным одинаковым результатам.</li>
+        <li>Skills не заменяют проверку результата владельцем.</li>
+        <li>Документация устаревает, если её обновление не входит в каждую фичу.</li>
+        <li>Критические изменения нельзя отдавать агенту без границ (у нас — A0–A4).</li>
+      </ul>
+    </div>
+  </div>
+  <div class="factrow">
+    <div class="f"><small>КОГДА ПРИМЕНЯТЬ</small><b>неясная / новая задача</b></div>
+    <div class="f"><small>КОГДА СОКРАТИТЬ</small><b>маленькая обратимая правка</b></div>
+    <div class="f"><small>КОНТРОЛЬ КАЧЕСТВА</small><b>согласованная спека</b></div>
+    <div class="f"><small>ГЛАВНЫЙ РИСК</small><b>недостаточный контекст</b></div>
+  </div>
+</section>
+
+<!-- 04 ─────────────────────────────────────────────── -->
+<section class="screen" id="folders" data-title="folders">
+  <div class="topline"><span class="where">HQ · ОТДЕЛЫ · РЕКОМЕНДАЦИЯ И РЕАЛИЗАЦИЯ</span>
+    <span class="nav-arrows"><button class="arrow prev">←</button><button class="arrow next">→</button></span></div>
+  <div class="num">04</div>
+  <h1>Архитектура папок: наш штаб развивает рекомендацию урока</h1>
+  <p class="intro">Урок показывает принцип, а не обязательный набор имён: плоский HQ как «голова», отдельные проекты рядом, ссылки между ними. Наша версия подробнее, но принципу не противоречит.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Рекомендация на уроке</h3>
+      <pre class="tree">WORKSPACE/
+├── HQ/                 <span class="c"># точка входа</span>
+│   ├── rules           <span class="c"># системный prompt</span>
+│   ├── owner context   <span class="c"># кто владелец</span>
+│   ├── tasks           <span class="c"># что сейчас делать</span>
+│   └── project links   <span class="c"># где лежит работа</span>
+├── PROJECT_A/          <span class="c"># отдельный отдел</span>
+├── PROJECT_B/
+└── KNOWLEDGE/          <span class="c"># база знаний</span></pre>
+    </div>
+    <div class="card">
+      <h3>Наш штаб (реальный)</h3>
+      <pre class="tree">~/myai/HQ/
+├── <span class="k">AGENTS.md</span>           <span class="c"># правила · A0–A4 · Ф1–Ф4</span>
+├── <span class="k">me.md</span> · <span class="k">tasks.md</span>    <span class="c"># владелец · фокус</span>
+├── <span class="k">projects.md</span>         <span class="c"># 13 отделов · 4 блока</span>
+├── <span class="k">structure.md</span>        <span class="c"># ярусы · роли · цех</span>
+├── <span class="k">index.html</span> · help/  <span class="c"># командный пункт · эта карта</span>
+├── docs/agents/        <span class="c"># спеки · трекер Issues</span>
+└── learn-personal-corp/ <span class="c"># учебный отдел</span>
+<span class="c">рядом: ~/myai/marketing · ogod · openclaw · …</span></pre>
+    </div>
+    <div class="card wide">
+      <h3>Зачем каждая группа</h3>
+      <div class="scroll">
+        <table class="cmp">
+          <thead><tr><th>ГРУППА</th><th>КАКУЮ ЗАДАЧУ РЕШАЕТ</th><th>СВЯЗЬ С УРОКОМ</th></tr></thead>
+          <tbody>
+            <tr><td>AGENTS.md</td><td>Порядок чтения, уровни автономности, протокол фактов.</td><td>Прямое воплощение «файла правил».</td></tr>
+            <tr><td>me.md / tasks.md</td><td>Контекст владельца и недельный фокус: «что у меня сегодня?».</td><td>Owner context + tasks из рекомендации.</td></tr>
+            <tr><td>projects.md</td><td>Маршрутизирует в отделы, не копируя их содержимое.</td><td>Project links из рекомендации.</td></tr>
+            <tr><td>structure.md</td><td>Устройство системы по требованию — не грузит каждую сессию.</td><td>Наша надстройка: экономика контекста.</td></tr>
+            <tr><td>index.html / help/</td><td>Визуальный слой: командный пункт и учебная карта.</td><td>Наша надстройка поверх файлов.</td></tr>
+            <tr><td>docs/agents/</td><td>Спеки и конвейер тикетов (GitHub Issues).</td><td>Workshop-процесс, вшитый в штаб.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div style="height:14px"></div>
+  <div class="callout">
+    <span class="mark">КОНТРОЛЬНЫЙ ВОПРОС</span>
+    <p>Файл описывает детали одного проекта → ему место <b>в отделе</b>. Файл нужен для выбора приоритета, маршрута или общего ограничения → ему место <b>в HQ</b>.</p>
+  </div>
+</section>
+
+<!-- 05 ─────────────────────────────────────────────── -->
+<section class="screen" id="terms" data-title="terms">
+  <div class="topline"><span class="where">СЛОВАРЬ · 30 ТЕРМИНОВ · l1-glossary.md</span>
+    <span class="nav-arrows"><button class="arrow prev">←</button><button class="arrow next">→</button></span></div>
+  <div class="num">05</div>
+  <h1>Термины недели</h1>
+  <p class="intro">Не определения ради определений: что означает термин и какое действие он меняет. Полный глоссарий отдела — 30 терминов, источник: транскрипт урока.</p>
+  <div class="scroll">
+    <table class="cmp glossary">
+      <thead><tr><th>ТЕРМИН</th><th>ЗНАЧЕНИЕ</th><th>ЗАЧЕМ ВАЖНО</th></tr></thead>
+      <tbody>
+        <tr><td>Personal Corp</td><td>Личная «компания» из отделов, агентов, правил и источников</td><td>Мыслить не чатами, а повторяемыми процессами</td></tr>
+        <tr><td>HQ / штаб</td><td>Главная папка-контекст: владелец, отделы, задачи</td><td>Агент стартует здесь и маршрутизирует работу</td></tr>
+        <tr><td>Отдел</td><td>Папка/проект со своей целью, правилами и материалами</td><td>Детали живут в отделе, HQ хранит ссылку</td></tr>
+        <tr><td>Кабинет руководителя</td><td>Метафора HQ: карта отделов, а не все детали</td><td>Не перегружать штаб внутренностями отделов</td></tr>
+        <tr><td>Источник правды</td><td>Один файл/место с подтверждённым фактом</td><td>Агент не выдумывает и не дублирует (у нас — Ф1)</td></tr>
+        <tr><td>Контекст</td><td>Что агент «видит»: файлы, prompt, история, правила</td><td>Без контекста агент не знает, что и почему делать</td></tr>
+        <tr><td>Чистый контекст</td><td>Новая сессия без старой истории</td><td>Проверка, что модель узнаёт всё из файлов</td></tr>
+        <tr><td>LLM</td><td>Большая языковая модель, генерирует текст</td><td>Сама по себе не действует на компьютере</td></tr>
+        <tr><td>Агент</td><td>LLM + обвязка + инструменты + среда</td><td>Превращает рассуждения в действия</td></tr>
+        <tr><td>Harness / обвязка</td><td>Среда, дающая модели инструменты и управляющая ими</td><td>«Упряжка», через которую модель действует</td></tr>
+        <tr><td>Инструменты</td><td>Действия через текст: shell, browser, read/write</td><td>Без них модель не увидит папку и не создаст файл</td></tr>
+        <tr><td>Окружение</td><td>Компьютер, папка, терминал, права агента</td><td>Определяет, что агент реально может</td></tr>
+        <tr><td>Терминал / CLI</td><td>Управление компьютером текстовыми командами</td><td>Идеален для LLM: команды и результат — текст</td></tr>
+        <tr><td>TUI / ASCII UI</td><td>Текстовый интерфейс из символов</td><td>Агент показывает структуру прямо в чате</td></tr>
+        <tr><td>Mermaid</td><td>Текстовый формат диаграмм</td><td>Агент рисует логику и план текстом</td></tr>
+        <tr><td>Plan mode</td><td>Сначала план, потом изменения</td><td>Безопасная проверка намерений агента</td></tr>
+        <tr><td>Read-only</td><td>Разведка без записи файлов</td><td>Первый безопасный шаг (у нас — A0)</td></tr>
+        <tr><td>AGENTS.md</td><td>Правила для агента в папке</td><td>Что можно, что нельзя, где искать задачи</td></tr>
+        <tr><td>CLAUDE.md symlink</td><td>Ссылка на AGENTS.md для Claude Code</td><td>Один источник правил для разных агентов</td></tr>
+        <tr><td>README.md</td><td>Входная карта проекта для человека и агента</td><td>Быстро объясняет, что где лежит</td></tr>
+        <tr><td>projects.md</td><td>Индекс отделов в HQ</td><td>Найти отдел по назначению</td></tr>
+        <tr><td>tasks.md</td><td>Текущий фокус и задачи</td><td>«Что у меня сегодня?»</td></tr>
+        <tr><td>me.md</td><td>Контекст владельца HQ</td><td>Агент учитывает цели и стиль</td></tr>
+        <tr><td>GitHub как Notion</td><td>Репозиторий как место задач и знаний агентов</td><td>История, issues, автоматизация (наш трекер)</td></tr>
+        <tr><td>Obsidian</td><td>Просмотрщик/редактор Markdown</td><td>Ручное чтение файлов, которые ведут агенты</td></tr>
+        <tr><td>Granola / транскрипты</td><td>Запись встреч → заметки</td><td>Разговоры превращаются в источники</td></tr>
+        <tr><td>LMS</td><td>Учебная база курса</td><td>Записи, справочник, транскрипты уроков</td></tr>
+        <tr><td>Skill</td><td>Переиспользуемая инструкция для агента</td><td>Удачный процесс переносится между задачами</td></tr>
+        <tr><td>Browser control</td><td>Агент управляет браузером</td><td>Залогиненные сервисы, кабинеты, проверка страниц</td></tr>
+        <tr><td>Prompt-интервью</td><td>Вопросы по одному с вариантами ответов</td><td>Вытаскивает контекст из головы владельца</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 06 ─────────────────────────────────────────────── -->
+<section class="screen" id="questions" data-title="questions">
+  <div class="topline"><span class="where">Q&amp;A · ПРАКТИЧЕСКИЕ РАЗВИЛКИ · l1-questions.md</span>
+    <span class="nav-arrows"><button class="arrow prev">←</button><button class="arrow next">→</button></span></div>
+  <div class="num">06</div>
+  <h1>Вопросы недели</h1>
+  <p class="intro">Сначала — вопросы участников с ответами (общий материал недели), затем банк самопроверки из материалов отдела: 20 вопросов, разборы — в <a href="../learn-personal-corp/lessons/l1/index.html">конспекте урока</a>.</p>
+
+  <h2>Вопросы участников — с ответами</h2>
+  <details class="qa"><summary>Насколько обязательно использовать GitHub?<span class="who">основной урок</span></summary>
+    <p class="a">GitHub показан как <b>память и версионная база знаний</b>, а не только хранилище кода. Начать можно с локальных файлов; важен принцип сохранённого контекста. <b>У нас:</b> штаб уже git-репо, трекер — Issues.</p></details>
+  <details class="qa"><summary>Когда нужен дополнительный инструмент?<span class="who">основной урок</span></summary>
+    <p class="a">Когда есть <b>конкретное ограничение</b> (пример: мобильный доступ к агенту). Не добавлять обвязку потому, что её используют другие.</p></details>
+  <details class="qa"><summary>Переносить ли десятки проектов внутрь HQ?<span class="who">участница</span></summary>
+    <p class="a"><b>Нет.</b> Проекты остаются на месте; в HQ — ссылки и навигация. У нас так и сделано: projects.md с путями и статусами.</p></details>
+  <details class="qa"><summary>Начинать день из HQ или работать из него с проектом?<span class="who">участница</span></summary>
+    <p class="a">Первый уровень — начать с HQ и перейти в отдел. Позже можно глобальный skill, который читает HQ из любой папки.</p></details>
+  <details class="qa"><summary>Как развивать большой существующий проект?<span class="who">workshop</span></summary>
+    <p class="a">Сначала <b>инвентаризация и wiki</b>, затем проектирование по документации, и только после — сопоставление задач с кодовой базой.</p></details>
+  <details class="qa"><summary>Как поддерживать документацию актуальной?<span class="who">workshop</span></summary>
+    <p class="a">Включить обновление доков, тесты и проверки <b>в каждую существенную фичу</b>. Иначе wiki быстро становится техдолгом.</p></details>
+
+  <div style="height:26px"></div>
+  <h2>Банк самопроверки — 20 вопросов</h2>
+  <ol class="qbank">
+    <li>Зачем нужен HQ, если уже есть отдельные проекты и папки?</li>
+    <li>Почему HQ не должен хранить детали реализации каждого отдела?</li>
+    <li>Чем отдел отличается от обычной папки с файлами?</li>
+    <li>Что значит «один источник правды» в работе с агентами?</li>
+    <li>Почему GitHub можно использовать как аналог Notion для агентов?</li>
+    <li>Почему Obsidian здесь — просмотрщик Markdown, а не «магическая база знаний»?</li>
+    <li>Что такое LLM и почему она сама по себе «ничего не делает»?</li>
+    <li>Что превращает LLM в агента?</li>
+    <li>Что такое harness/обвязка и почему метафора «упряжки» полезна?</li>
+    <li>Почему инструменты агента обычно хорошо описываются через текст?</li>
+    <li>Почему терминал удобен для LLM?</li>
+    <li>Почему модель без инструментов не может честно ответить «что в этой папке»?</li>
+    <li>Зачем запускать тот же prompt в чистом контексте?</li>
+    <li>Что показывает plan mode?</li>
+    <li>Почему read-only разведка безопаснее, чем сразу разрешать запись?</li>
+    <li>Как Mermaid помогает увидеть логику агента?</li>
+    <li>Чем TUI/ASCII-формат полезен в ответах агента?</li>
+    <li>Почему важно читать план агента перед выполнением?</li>
+    <li>Как вопрос «Что у меня сегодня?» работает через tasks.md и правила?</li>
+    <li>Почему персонализацию отдела лучше начинать с одного процесса?</li>
+  </ol>
+
+  <div style="height:26px"></div>
+  <h2>Практические prompts</h2>
+  <div class="prompt"><div class="ph">01 · ПРОВЕРИТЬ, ЧТО АГЕНТ ВИДИТ В ПАПКЕ</div><pre>Что ты видишь в этой папке?
+Перед тем как отвечать, расскажи прямо в чате, какие инструменты ты хочешь вызвать,
+и нарисуй логическую цепочку в формате Mermaid.</pre></div>
+  <div class="prompt"><div class="ph">02 · ГРАНИЦА «БЕЗ ИНСТРУМЕНТОВ»</div><pre>Не используй инструменты. Что ты видишь в этой папке?</pre></div>
+  <div class="prompt"><div class="ph">03 · ВЫТЯНУТЬ КОНТЕКСТ ИНТЕРВЬЮ</div><pre>Проведи со мной интервью по каждому из вопросов, пока мы не придём к общему пониманию.
+Иди по одному вопросу за раз. Для каждого вопроса предлагай рекомендованные варианты.
+Если можешь сам найти ответ через исследование файлов — сделай это и не спрашивай меня.
+Не начинай реализацию, пока мы не пришли к общему пониманию.</pre></div>
+  <div class="prompt"><div class="ph">04 · ДОБАВИТЬ ПРОЕКТ В HQ</div><pre>У меня есть проект рядом с HQ. Добавь, пожалуйста, ссылку на него в HQ:
+путь, назначение, правила и статус. Детали проекта оставь внутри проекта.</pre></div>
+</section>
+
+<!-- 07 ─────────────────────────────────────────────── -->
+<section class="screen" id="homework" data-title="homework">
+  <div class="topline"><span class="where">ДОМАШНЯЯ РАБОТА · СДАЧА В ТОПИК «ДЗ»</span>
+    <span class="nav-arrows"><button class="arrow prev">←</button><button class="arrow next">→</button></span></div>
+  <div class="num">07</div>
+  <h1>Что задано, что готово и как сдать</h1>
+  <p class="intro">ДЗ проверяет наличие первого рабочего контура: штаб с правилами, учебный отдел с HTML-страницей по транскрипту и связь между ними.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Задание 1 · Главный отдел HQ</h3>
+      <ul class="hw-check">
+        <li><span class="m ok">✓</span>Папка HQ создана и открыта в агенте</li>
+        <li><span class="m ok">✓</span>Файл правил AGENTS.md (+ симлинк CLAUDE.md) — A0–A4, Ф1–Ф4</li>
+        <li><span class="m ok">✓</span>Инфо о себе, задачах, проектах: me.md · tasks.md · projects.md</li>
+        <li><span class="m ok">✓</span>Ссылки на активные проекты: 13 отделов, 8 active</li>
+        <li><span class="m ok">✓</span>Границы: HQ — запись; соседние отделы — read-only (A3 — «kk»)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Задание 2 · Учебный отдел</h3>
+      <ul class="hw-check">
+        <li><span class="m ok">✓</span>Папка learn-personal-corp со своими правилами</li>
+        <li><span class="m ok">✓</span>Транскрипт урока сохранён как источник (SHA-256 ✓)</li>
+        <li><span class="m ok">✓</span>HTML-страница по транскрипту: конспект урока 1</li>
+        <li><span class="m ok">✓</span>Отдел связан со штабом: строка в projects.md, блок «Учёба»</li>
+      </ul>
+    </div>
+    <div class="card wide">
+      <h3>Как сдать — 4 шага</h3>
+      <ol class="steps">
+        <li><span>Взять <b>отчёт ДЗ</b> — <span style="font-family:var(--mono);font-size:0.92em">learn-personal-corp/reports/2026-07-15-hw-l1.html</span>: чеклист, структура и схема уже внутри.</span></li>
+        <li><span>Взять <b>конспект урока</b> — <span style="font-family:var(--mono);font-size:0.92em">lessons/l1/index.html</span> (по желанию + главная штаба и эта карта).</span></li>
+        <li><span>Скопировать <b>текст сообщения</b> из блока «Что отправить» отчёта.</span></li>
+        <li><span>Отправить HTML-файлы + текст в топик «ДЗ». <b>Проверить: без секретов, токенов и личных данных.</b> Страницы самодостаточны — откроются у любого получателя.</span></li>
+      </ol>
+    </div>
+  </div>
+  <div class="factrow">
+    <div class="f"><small>СТАТУС</small><b>готово к сдаче</b></div>
+    <div class="f"><small>ДОКАЗАТЕЛЬСТВО 1</small><b>отчёт ДЗ (HTML)</b></div>
+    <div class="f"><small>ДОКАЗАТЕЛЬСТВО 2</small><b>конспект урока (HTML)</b></div>
+    <div class="f"><small>СЛЕДУЮЩИЙ ЦИКЛ</small><b>урок 2/8</b></div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+  (function () {
+    var screens = Array.prototype.slice.call(document.querySelectorAll('.screen'));
+    var nav = Array.prototype.slice.call(document.querySelectorAll('.track a'));
+    var i = 0;
+    function show(n, writeHash) {
+      i = (n + screens.length) % screens.length;
+      screens.forEach(function (s, x) { s.classList.toggle('active', x === i); });
+      nav.forEach(function (b, x) {
+        b.classList.toggle('active', x === i);
+        b.setAttribute('aria-current', x === i ? 'page' : 'false');
+      });
+      if (writeHash !== false) {
+        try { history.replaceState(null, '', '#' + screens[i].dataset.title); } catch (e) {}
+      }
+      window.scrollTo({ top: 0 });
+    }
+    var h = location.hash.slice(1);
+    var found = screens.findIndex(function (s) { return s.dataset.title === h; });
+    // на первичном показе hash не пишем: браузер по завершении загрузки
+    // скроллит к фрагменту и увозит страницу ниже сайдбара
+    show(found >= 0 ? found : 0, false);
+    nav.forEach(function (b) { b.addEventListener('click', function (e) { e.preventDefault(); show(+b.dataset.i); }); });
+    document.querySelectorAll('.prev').forEach(function (b) { b.addEventListener('click', function () { show(i - 1); }); });
+    document.querySelectorAll('.next').forEach(function (b) { b.addEventListener('click', function () { show(i + 1); }); });
+    document.querySelectorAll('[data-go]').forEach(function (b) { b.addEventListener('click', function () { show(+b.dataset.go); }); });
+    document.addEventListener('keydown', function (e) {
+      if (e.target.closest('input, textarea')) return;
+      if (e.key === 'ArrowRight') show(i + 1);
+      if (e.key === 'ArrowLeft') show(i - 1);
+    });
+  })();
+</script>
+</body>
+</html>
