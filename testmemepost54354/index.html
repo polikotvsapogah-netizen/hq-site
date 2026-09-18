@@ -1,109 +1,545 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Test meme post #54354 — GEM_MEGA_MEME</title>
-<meta name="description" content="Meme post preview — English and Russian versions.">
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>Тест подписей мем-постов promo2</title>
 <script>
-(function () {
-  var ru = /(^|[?&])ru(&|$)/.test(location.search);
-  document.documentElement.lang = ru ? "ru" : "en";
-  document.documentElement.dataset.lang = ru ? "ru" : "en";
-})();
+const isRussian = new URLSearchParams(window.location.search).has('ru');
+if (isRussian) {
+  document.documentElement.lang = 'ru';
+  document.title = 'Тест подписей мем-постов promo2';
+} else {
+  document.documentElement.lang = 'en';
+  document.title = 'Promo2 Meme Captions Test';
+}
 </script>
 <style>
-  :root {
-    --bg:      oklch(0.145 0.012 258);
-    --surface: oklch(0.185 0.014 258);
-    --raised:  oklch(0.22 0.016 258);
-    --line:    oklch(0.30 0.02 258);
-    --ink:     oklch(0.93 0.005 258);
-    --muted:   oklch(0.70 0.015 258);
-    --cobalt:  oklch(0.68 0.13 258);
-    --sans: system-ui, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; min-height: 100vh;
-    background: var(--bg); color: var(--ink);
-    font: 17px/1.6 var(--sans);
-    display: flex; align-items: center; justify-content: center;
-    padding: 48px 20px;
-  }
-  .lang-switch {
-    position: fixed; top: 16px; right: 16px; z-index: 10;
-    font: 600 14px/1 var(--sans);
-    color: var(--ink); background: var(--raised);
-    border: 1px solid var(--line); border-radius: 8px;
-    padding: 10px 16px; cursor: pointer;
-  }
-  .lang-switch:hover { background: var(--surface); border-color: var(--cobalt); }
-  main { max-width: 640px; width: 100%; }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--line); border-radius: 14px;
-    padding: 36px 32px;
-  }
-  h1 { margin: 0 0 8px; font-size: 15px; font-weight: 600; letter-spacing: 0.04em;
-       text-transform: uppercase; color: var(--muted); }
-  blockquote {
-    margin: 20px 0 0; font-size: 26px; line-height: 1.35; font-weight: 600;
-    border: 0; padding: 0;
-  }
-  .meta { margin-top: 24px; font-size: 14px; color: var(--muted); }
-  .meta a { color: var(--cobalt); text-decoration: none; }
-  .meta a:hover { text-decoration: underline; }
-  .visually-hidden {
-    position: absolute; width: 1px; height: 1px; margin: -1px;
-    clip-path: inset(50%); overflow: hidden; white-space: nowrap;
-  }
-  [data-lang-block="en"] { display: none; }
-  [data-lang-block="ru"] { display: none; }
-  html[data-lang="en"] [data-lang-block="en"] { display: block; }
-  html[data-lang="ru"] [data-lang-block="ru"] { display: block; }
-</style>
-</head>
-<body>
-<button class="lang-switch" id="langSwitch" type="button">Русская версия</button>
-<main>
-  <article class="card">
-    <h1>@GEM_MEGA_MEME · quote post</h1>
-    <h2 class="visually-hidden" id="postHeading">Meme post — English and Russian versions</h2>
-
-    <div data-lang-block="en">
-      <blockquote>A ₿ear can win the short-term argument and still lose the long-term outcome.</blockquote>
-      <p class="meta">Quote of <a href="https://x.com/saylor/status/2100548699172520085">@saylor</a> ·
-        <a href="https://x.com/GEM_MEGA_MEME/status/2100610344469021101">post on X</a> · September 17, 2026</p>
-    </div>
-
-    <div data-lang-block="ru">
-      <blockquote>Медведь может выиграть спор на короткой дистанции — и всё равно проиграть в долгосрочном итоге.</blockquote>
-      <p class="meta">Цитата поста <a href="https://x.com/saylor/status/2100548699172520085">@saylor</a> ·
-        <a href="https://x.com/GEM_MEGA_MEME/status/2100610344469021101">пост в X</a> · 17 сентября 2026</p>
-    </div>
-  </article>
-</main>
+body{font:15px/1.4 -apple-system,Helvetica,sans-serif;margin:0;padding:16px 24px;background:#f6f6f4;color:#111}
+h1{font-size:22px} .meme{background:#fff;border:1px solid #ddd;border-radius:10px;padding:16px;margin:18px 0;display:grid;grid-template-columns:340px 1fr;gap:18px}
+.meme img{width:340px;max-width:100%;border-radius:6px;border:1px solid #eee}
+.card dt{font-weight:600;color:#555;font-size:12px;margin-top:6px} .card dd{margin:0 0 2px}
+.models{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.model{border:1px solid #e3e3e3;border-radius:8px;padding:10px;background:#fafafa} .model h3{margin:0 0 8px;font-size:14px}
+.cap{display:flex;gap:8px;align-items:flex-start;padding:6px 4px;border-top:1px dashed #e5e5e5;white-space:pre-wrap}
+.cap input{margin-top:3px} .pat{color:#888;font-size:11px;display:block}
+.flag{display:inline-block;background:#fde8e8;color:#a00;font-size:11px;padding:0 5px;border-radius:4px;margin-left:4px}
+.err{color:#a00} .sum{position:sticky;top:0;background:#fff;border-bottom:1px solid #ddd;padding:8px 0;z-index:2;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.sum b{font-size:16px} textarea{width:100%;height:90px;font:12px monospace} .cardflag{font-size:13px;color:#a00}
+@media(max-width:900px){.meme{grid-template-columns:1fr}.models{grid-template-columns:1fr 1fr}}
+</style></head><body>
+<h1>Тест подписей мем-постов promo2 (HQ#1307)</h1>
+<h2 id="section-2">Инструкция</h2>
+<p>Отмечай галочкой подписи, которые годятся. Отметки хранятся в этом браузере. Внизу итог по моделям и кнопка «Скопировать итог», текст итога пришли в чат.</p>
+<div class="sum" id="sum"></div>
+<button id="langSwitch" onclick="window.location.href=isRussian?location.pathname:location.pathname+'?ru'" style="position:fixed;top:12px;right:24px;padding:8px 16px;background:#111;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;">Русская версия</button>
 <script>
-(function () {
-  var root = document.documentElement;
-  var btn = document.getElementById("langSwitch");
-  var heading = document.getElementById("postHeading");
-  function apply(lang, push) {
-    root.lang = lang;
-    root.dataset.lang = lang;
-    btn.textContent = lang === "en" ? "Русская версия" : "English version";
-    heading.textContent = lang === "en"
-      ? "Meme post — English and Russian versions"
-      : "Мем-пост — английская и русская версии";
-    var q = lang === "ru" ? "?ru" : location.pathname;
-    if (push) history.replaceState(null, "", q);
-  }
-  btn.addEventListener("click", function () {
-    apply(root.dataset.lang === "en" ? "ru" : "en", true);
-  });
-  apply(root.dataset.lang || "en", false);
-})();
+document.getElementById('langSwitch').textContent = isRussian ? 'English version' : 'Русская версия';
 </script>
-</body>
-</html>
+<section class="meme" id="cherry-1">
+<div><img src="images/cherry-1.jpg" alt="cherry-1"><div><b>cherry-1</b> · карточка: gemini-3.8-flash-high, 18 с</div><label class="cardflag"><input type="checkbox" class="cardbad" data-meme="cherry-1"> карточка мимо картинки</label></div>
+<dl class="card">
+<dt>Что на картинке</dt><dd style='white-space:pre-wrap'>Leonardo DiCaprio as Jay Gatsby in a tuxedo smiles smugly while raising a champagne glass against a backdrop of festive party lights and fireworks.</dd>
+<dt>Текст на картинке</dt><dd style='white-space:pre-wrap'>TO YOUR VICTORY IN BATTLE TOWN!</dd>
+<dt>В чём шутка</dt><dd style='white-space:pre-wrap'>The theatrical Gatsby toast turns the exhausting chaos of degen PVP trading into an exaggerated grand triumph. It hits home because surviving the trenches long enough to lock in an entry genuinely feels like winning an all-out war.</dd>
+<dt>Боль или эмоция</dt><dd style='white-space:pre-wrap'>The chaotic scramble of hopping between chats, charts, and DEXes to catch entries in PVP trading before getting dumped on.</dd>
+<dt>Фича или факт проекта</dt><dd style='white-space:pre-wrap'>[cherry_004] Everywhere else a call takes four apps — the chat, the chart, the DEX and the wallet — and the entry dies somewhere between them. In Cherry it never leaves one screen.</dd>
+<dt>Примеры подписей от карточки</dt><dd style='white-space:pre-wrap'>· Surviving the trenches with @cherrydotfun
+· One screen victories on @cherrydotfun
+· Trading made simple via @cherrydotfun
+· Cheers to wins on @cherrydotfun
+· Entering every trade inside @cherrydotfun</dd>
+</dl>
+<div class="models">
+<div class="model"><h3>Gemini 3.8 Flash <small>(18 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|gemini-3.8-flash-high|0" data-model="gemini-3.8-flash-high"><span><span class="pat">character voice · 33 зн.</span>caught the entry on @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|gemini-3.8-flash-high|1" data-model="gemini-3.8-flash-high"><span><span class="pat">scene label with a colon · 34 зн.</span>trader surviving on @cherrydotfun:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|gemini-3.8-flash-high|2" data-model="gemini-3.8-flash-high"><span><span class="pat">POV frame · 46 зн.</span>pov: you only needed one screen. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|gemini-3.8-flash-high|3" data-model="gemini-3.8-flash-high"><span><span class="pat">setup and turn · 65 зн.</span>opened four apps to catch the dip
+already bought on @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|gemini-3.8-flash-high|4" data-model="gemini-3.8-flash-high"><span><span class="pat">talk to the project by tag · 41 зн.</span>how was that entry so clean @cherrydotfun</span></label>
+</div>
+<div class="model"><h3>Opus 4.6 Thinking <small>(6 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|claude-opus-4-6-thinking|0" data-model="claude-opus-4-6-thinking"><span><span class="pat">character voice · 38 зн.</span>i toast from one screen. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|claude-opus-4-6-thinking|1" data-model="claude-opus-4-6-thinking"><span><span class="pat">scene label with a colon · 52 зн.</span>degen who found @cherrydotfun before the entry died:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|claude-opus-4-6-thinking|2" data-model="claude-opus-4-6-thinking"><span><span class="pat">setup and turn · 97 зн.</span>survived four apps, three chats and two rugs just to place one trade. then i opened @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|claude-opus-4-6-thinking|3" data-model="claude-opus-4-6-thinking"><span><span class="pat">mini dialogue · 70 зн.</span>&quot;where&#x27;d you buy?&quot;
+&quot;same screen as the call&quot;
+&quot;wait what&quot;
+@cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|claude-opus-4-6-thinking|4" data-model="claude-opus-4-6-thinking"><span><span class="pat">talk to the project by tag · 53 зн.</span>@cherrydotfun why do entries never die on your screen<span class="flag">тег первым</span></span></label>
+</div>
+<div class="model"><h3>Grok 4.6 <small>(103 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|grok-4.6|0" data-model="grok-4.6"><span><span class="pat">character voice · 46 зн.</span>victory feels real on one screen @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|grok-4.6|1" data-model="grok-4.6"><span><span class="pat">scene label with a colon · 52 зн.</span>gatsby toasting in @cherrydotfun: one screen trading</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|grok-4.6|2" data-model="grok-4.6"><span><span class="pat">POV frame · 59 зн.</span>you&#x27;re the gatsby toasting after the trade on @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|grok-4.6|3" data-model="grok-4.6"><span><span class="pat">trying it on · 65 зн.</span>i&#x27;m toasting like gatsby after locking the entry on @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|grok-4.6|4" data-model="grok-4.6"><span><span class="pat">setup and turn · 88 зн.</span>scrambling across 4 apps until the right call drops then it&#x27;s the toast on @cherrydotfun</span></label>
+</div>
+<div class="model"><h3>GPT-5.6 SOL medium <small>(36 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|gpt-5.6-sol|0" data-model="gpt-5.6-sol"><span><span class="pat">character voice · 42 зн.</span>i caught the call mid-toast, @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|gpt-5.6-sol|1" data-model="gpt-5.6-sol"><span><span class="pat">scene label with a colon · 36 зн.</span>gatsby, filled inside @cherrydotfun:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|gpt-5.6-sol|2" data-model="gpt-5.6-sol"><span><span class="pat">POV frame · 38 зн.</span>pov: the entry survived. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|gpt-5.6-sol|3" data-model="gpt-5.6-sol"><span><span class="pat">parody of instructions · 53 зн.</span>open @cherrydotfun
+buy the call
+close everything else</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-1|gpt-5.6-sol|4" data-model="gpt-5.6-sol"><span><span class="pat">mini dialogue · 47 зн.</span>&quot;where&#x27;s the dex?&quot;
+&quot;in the chat.&quot;
+@cherrydotfun</span></label>
+</div>
+</div></section>
+<section class="meme" id="cherry-2">
+<div><img src="images/cherry-2.jpg" alt="cherry-2"><div><b>cherry-2</b> · карточка: gemini-3.8-flash-high, 18 с</div><label class="cardflag"><input type="checkbox" class="cardbad" data-meme="cherry-2"> карточка мимо картинки</label></div>
+<dl class="card">
+<dt>Что на картинке</dt><dd style='white-space:pre-wrap'>An anime warrior radiates an intense golden aura while flexing and screaming in raw power. A pixelated cherry watermark appears in the upper right corner.</dd>
+<dt>Текст на картинке</dt><dd style='white-space:pre-wrap'>HOW I FEEL WHEN I GET THE SIGNALS FIRST</dd>
+<dt>В чём шутка</dt><dd style='white-space:pre-wrap'>The visual exaggerates the euphoric surge of adrenaline a trader feels when discovering an early call before the crowd. It lands because entering ahead of the curve makes any degen feel invincible.</dd>
+<dt>Боль или эмоция</dt><dd style='white-space:pre-wrap'>The frustration of constantly being exit liquidity and missing out on profitable entries shared too late.</dd>
+<dt>Фича или факт проекта</dt><dd style='white-space:pre-wrap'>cherry_002</dd>
+<dt>Примеры подписей от карточки</dt><dd style='white-space:pre-wrap'>· Catch early calls on @cherrydotfun
+· Entering the trade first @cherrydotfun
+· Unstoppable when signals hit @cherrydotfun
+· First to every call @cherrydotfun
+· Trading the feed on @cherrydotfun</dd>
+</dl>
+<div class="models">
+<div class="model"><h3>Gemini 3.8 Flash <small>(23 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|gemini-3.8-flash-high|0" data-model="gemini-3.8-flash-high"><span><span class="pat">character voice · 28 зн.</span>i bought it on @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|gemini-3.8-flash-high|1" data-model="gemini-3.8-flash-high"><span><span class="pat">POV frame · 48 зн.</span>pov: you entered before the crowd. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|gemini-3.8-flash-high|2" data-model="gemini-3.8-flash-high"><span><span class="pat">trying it on · 42 зн.</span>me after one green candle on @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|gemini-3.8-flash-high|3" data-model="gemini-3.8-flash-high"><span><span class="pat">talk to the project by tag · 43 зн.</span>where was this room yesterday @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|gemini-3.8-flash-high|4" data-model="gemini-3.8-flash-high"><span><span class="pat">setup and turn · 72 зн.</span>swore i was going to sleep early. then the room on @cherrydotfun pinged.</span></label>
+</div>
+<div class="model"><h3>Opus 4.6 Thinking <small>(5 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|claude-opus-4-6-thinking|0" data-model="claude-opus-4-6-thinking"><span><span class="pat">character voice · 36 зн.</span>i got the signal first @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|claude-opus-4-6-thinking|1" data-model="claude-opus-4-6-thinking"><span><span class="pat">POV frame · 57 зн.</span>pov you saw the call before the group chat. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|claude-opus-4-6-thinking|2" data-model="claude-opus-4-6-thinking"><span><span class="pat">scene label with a colon · 48 зн.</span>a @cherrydotfun user who checked the feed early:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|claude-opus-4-6-thinking|3" data-model="claude-opus-4-6-thinking"><span><span class="pat">setup and turn · 109 зн.</span>thought i was just opening a chat app. ended up signing a swap before anyone even saw the call. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|claude-opus-4-6-thinking|4" data-model="claude-opus-4-6-thinking"><span><span class="pat">talk to the project by tag · 47 зн.</span>@cherrydotfun why do your signals hit different<span class="flag">тег первым</span></span></label>
+</div>
+<div class="model"><h3>Grok 4.6 <small>(71 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|grok-4.6|0" data-model="grok-4.6"><span><span class="pat">character voice · 24 зн.</span>power mode @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|grok-4.6|1" data-model="grok-4.6"><span><span class="pat">scene label with a colon · 56 зн.</span>anime warrior flexing with golden aura at @cherrydotfun:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|grok-4.6|2" data-model="grok-4.6"><span><span class="pat">POV frame · 54 зн.</span>you spotting the signal before the crowd @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|grok-4.6|3" data-model="grok-4.6"><span><span class="pat">trying it on · 52 зн.</span>i&#x27;m the anime warrior flexing my power @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|grok-4.6|4" data-model="grok-4.6"><span><span class="pat">setup and turn · 86 зн.</span>everyone else is missing the early call @cherrydotfun but Cherry lets you get it first</span></label>
+</div>
+<div class="model"><h3>GPT-5.6 SOL medium <small>(19 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|gpt-5.6-sol|0" data-model="gpt-5.6-sol"><span><span class="pat">character voice · 33 зн.</span>i trade the feed at @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|gpt-5.6-sol|1" data-model="gpt-5.6-sol"><span><span class="pat">scene label with a colon · 40 зн.</span>the @cherrydotfun caller, fully charged:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|gpt-5.6-sol|2" data-model="gpt-5.6-sol"><span><span class="pat">POV frame · 41 зн.</span>pov: the call has receipts.
+@cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|gpt-5.6-sol|3" data-model="gpt-5.6-sol"><span><span class="pat">question to complete · 38 зн.</span>who sent the clean call?
+@cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-2|gpt-5.6-sol|4" data-model="gpt-5.6-sol"><span><span class="pat">talk to the project by tag · 45 зн.</span>can every call bring receipts, @cherrydotfun?</span></label>
+</div>
+</div></section>
+<section class="meme" id="cherry-3">
+<div><img src="images/cherry-3.jpg" alt="cherry-3"><div><b>cherry-3</b> · карточка: gemini-3.8-flash-high, 26 с</div><label class="cardflag"><input type="checkbox" class="cardbad" data-meme="cherry-3"> карточка мимо картинки</label></div>
+<dl class="card">
+<dt>Что на картинке</dt><dd style='white-space:pre-wrap'>A Venn diagram displays two overlapping circles with a calm Wojak on the left representing a reliable wallet and an excited Soyjak on the right representing an active social app. The center intersection features the pixel-art Cherry logo labeled cherry.</dd>
+<dt>Текст на картинке</dt><dd style='white-space:pre-wrap'>reliable wallet cherry active social app</dd>
+<dt>В чём шутка</dt><dd style='white-space:pre-wrap'>Traders are constantly forced to choose between isolated wallet interfaces and chaotic social platforms that cannot trade. Cherry lands the punchline by sitting directly in the middle, combining onchain execution with real-time social feeds.</dd>
+<dt>Боль или эмоция</dt><dd style='white-space:pre-wrap'>The annoyance of switching between separate chat tools and wallet software just to discuss and verify calls.</dd>
+<dt>Фича или факт проекта</dt><dd style='white-space:pre-wrap'>[cherry_001] Cherry is the social app on Solana where your wallet is your account: chat, communities and trading on one screen.</dd>
+<dt>Примеры подписей от карточки</dt><dd style='white-space:pre-wrap'>· Trading meets chat on @cherrydotfun
+· Both worlds live inside @cherrydotfun
+· Your wallet talks on @cherrydotfun
+· Social and wallet united @cherrydotfun
+· Find the sweet spot @cherrydotfun</dd>
+</dl>
+<div class="models">
+<div class="model"><h3>Gemini 3.8 Flash <small>(26 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|gemini-3.8-flash-high|0" data-model="gemini-3.8-flash-high"><span><span class="pat">character voice · 30 зн.</span>i made them talk @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|gemini-3.8-flash-high|1" data-model="gemini-3.8-flash-high"><span><span class="pat">POV frame · 44 зн.</span>pov you stopped juggling tabs. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|gemini-3.8-flash-high|2" data-model="gemini-3.8-flash-high"><span><span class="pat">question to complete · 47 зн.</span>which circle are you dropping for @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|gemini-3.8-flash-high|3" data-model="gemini-3.8-flash-high"><span><span class="pat">setup and turn · 94 зн.</span>kept five windows open to confirm one signal.
+then @cherrydotfun put the swap inside the chat.</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|gemini-3.8-flash-high|4" data-model="gemini-3.8-flash-high"><span><span class="pat">talk to the project by tag · 39 зн.</span>why did this take so long @cherrydotfun</span></label>
+</div>
+<div class="model"><h3>Opus 4.6 Thinking <small>(5 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|claude-opus-4-6-thinking|0" data-model="claude-opus-4-6-thinking"><span><span class="pat">character voice · 35 зн.</span>i live in the overlap @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|claude-opus-4-6-thinking|1" data-model="claude-opus-4-6-thinking"><span><span class="pat">scene label with a colon · 37 зн.</span>the @cherrydotfun user in the middle:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|claude-opus-4-6-thinking|2" data-model="claude-opus-4-6-thinking"><span><span class="pat">POV frame · 45 зн.</span>pov you stopped switching tabs. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|claude-opus-4-6-thinking|3" data-model="claude-opus-4-6-thinking"><span><span class="pat">wordplay on the name · 44 зн.</span>cherry-picked the best of both @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|claude-opus-4-6-thinking|4" data-model="claude-opus-4-6-thinking"><span><span class="pat">setup and turn · 110 зн.</span>opened a wallet app to trade, opened a group chat to talk, then realized @cherrydotfun does both on one screen</span></label>
+</div>
+<div class="model"><h3>Grok 4.6 <small>(132 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|grok-4.6|0" data-model="grok-4.6"><span><span class="pat">character voice · 53 зн.</span>my wallet and my signals finally synced @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|grok-4.6|1" data-model="grok-4.6"><span><span class="pat">POV frame · 47 зн.</span>i see my wallet trade in the call @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|grok-4.6|2" data-model="grok-4.6"><span><span class="pat">trying it on · 70 зн.</span>i&#x27;m the trader who now uses cherry for wallet and social @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|grok-4.6|3" data-model="grok-4.6"><span><span class="pat">setup and turn · 87 зн.</span>traders used to switch apps for every trade but cherry sits in the middle @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|grok-4.6|4" data-model="grok-4.6"><span><span class="pat">talk to the project by tag · 63 зн.</span>cherry why isn&#x27;t my wallet chatting with my calls @cherrydotfun</span></label>
+</div>
+<div class="model"><h3>GPT-5.6 SOL medium <small>(17 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|gpt-5.6-sol|0" data-model="gpt-5.6-sol"><span><span class="pat">character voice · 30 зн.</span>i trade calls on @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|gpt-5.6-sol|1" data-model="gpt-5.6-sol"><span><span class="pat">scene label with a colon · 39 зн.</span>caller with receipts via @cherrydotfun:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|gpt-5.6-sol|2" data-model="gpt-5.6-sol"><span><span class="pat">POV frame · 42 зн.</span>pov: your call has receipts. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|gpt-5.6-sol|3" data-model="gpt-5.6-sol"><span><span class="pat">parody of instructions · 54 зн.</span>open @cherrydotfun
+find the call
+forget the other apps</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-3|gpt-5.6-sol|4" data-model="gpt-5.6-sol"><span><span class="pat">talk to the project by tag · 35 зн.</span>can my wallet reply, @cherrydotfun?</span></label>
+</div>
+</div></section>
+<section class="meme" id="cherry-4">
+<div><img src="images/cherry-4.jpg" alt="cherry-4"><div><b>cherry-4</b> · карточка: gemini-3.8-flash-high, 14 с</div><label class="cardflag"><input type="checkbox" class="cardbad" data-meme="cherry-4"> карточка мимо картинки</label></div>
+<dl class="card">
+<dt>Что на картинке</dt><dd style='white-space:pre-wrap'>Lisa Simpson stands on an auditorium stage presenting a single slide on a projection screen to an attentive audience.</dd>
+<dt>Текст на картинке</dt><dd style='white-space:pre-wrap'>One day, you’ll join Cherry.fan
+And it’ll be the best fan of your life</dd>
+<dt>В чём шутка</dt><dd style='white-space:pre-wrap'>The meme uses the classic presentation template to make an earnest, slightly garbled declaration about how everyone will eventually migrate to Cherry. Its deadpan certainty lands because crypto users know onchain social migration is inevitable once a superior hub takes off.</dd>
+<dt>Боль или эмоция</dt><dd style='white-space:pre-wrap'>Exhaustion from juggling disjointed tools and the regret of staying too long on legacy chat apps before realizing where the real onchain community moved.</dd>
+<dt>Фича или факт проекта</dt><dd style='white-space:pre-wrap'>[cherry_001] Cherry is the social app on Solana where your wallet is your account: chat, communities and trading on one screen.</dd>
+<dt>Примеры подписей от карточки</dt><dd style='white-space:pre-wrap'>· The inevitable transition to @cherrydotfun
+· You will end up on @cherrydotfun
+· Trading feels better on @cherrydotfun
+· The timeline belongs to @cherrydotfun
+· One app changes everything @cherrydotfun</dd>
+</dl>
+<div class="models">
+<div class="model"><h3>Gemini 3.8 Flash <small>(26 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|gemini-3.8-flash-high|0" data-model="gemini-3.8-flash-high"><span><span class="pat">character voice · 30 зн.</span>my only slide is @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|gemini-3.8-flash-high|1" data-model="gemini-3.8-flash-high"><span><span class="pat">scene label with a colon · 36 зн.</span>me pitching @cherrydotfun to the gc:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|gemini-3.8-flash-high|2" data-model="gemini-3.8-flash-high"><span><span class="pat">question to complete · 28 зн.</span>who is next on @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|gemini-3.8-flash-high|3" data-model="gemini-3.8-flash-high"><span><span class="pat">talk to the project by tag · 33 зн.</span>was this deck yours @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|gemini-3.8-flash-high|4" data-model="gemini-3.8-flash-high"><span><span class="pat">setup and turn · 77 зн.</span>thought we needed five tools to execute.
+then someone showed us @cherrydotfun</span></label>
+</div>
+<div class="model"><h3>Opus 4.6 Thinking <small>(5 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|claude-opus-4-6-thinking|0" data-model="claude-opus-4-6-thinking"><span><span class="pat">character voice · 30 зн.</span>i already joined @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|claude-opus-4-6-thinking|1" data-model="claude-opus-4-6-thinking"><span><span class="pat">scene label with a colon · 37 зн.</span>lisa after discovering @cherrydotfun:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|claude-opus-4-6-thinking|2" data-model="claude-opus-4-6-thinking"><span><span class="pat">setup and turn · 90 зн.</span>she rehearsed the whole presentation but the audience was already trading on @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|claude-opus-4-6-thinking|3" data-model="claude-opus-4-6-thinking"><span><span class="pat">wordplay on the name · 41 зн.</span>cherry on top of every fan. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|claude-opus-4-6-thinking|4" data-model="claude-opus-4-6-thinking"><span><span class="pat">talk to the project by tag · 37 зн.</span>@cherrydotfun why is she right though<span class="flag">тег первым</span></span></label>
+</div>
+<div class="model"><h3>Grok 4.6 <small>(86 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|grok-4.6|0" data-model="grok-4.6"><span><span class="pat">character voice · 33 зн.</span>i trade the feed on @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|grok-4.6|1" data-model="grok-4.6"><span><span class="pat">scene label with a colon · 39 зн.</span>lisa simpson presenting @cherrydotfun :</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|grok-4.6|2" data-model="grok-4.6"><span><span class="pat">POV frame · 37 зн.</span>you&#x27;re in the audience. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|grok-4.6|3" data-model="grok-4.6"><span><span class="pat">trying it on · 41 зн.</span>i&#x27;m trying the presentation @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|grok-4.6|4" data-model="grok-4.6"><span><span class="pat">question to complete · 38 зн.</span>who&#x27;s next presenting on @cherrydotfun</span></label>
+</div>
+<div class="model"><h3>GPT-5.6 SOL medium <small>(26 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|gpt-5.6-sol|0" data-model="gpt-5.6-sol"><span><span class="pat">character voice · 47 зн.</span>i brought receipts for the calls, @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|gpt-5.6-sol|1" data-model="gpt-5.6-sol"><span><span class="pat">POV frame · 41 зн.</span>pov: the call has receipts. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|gpt-5.6-sol|2" data-model="gpt-5.6-sol"><span><span class="pat">parody of instructions · 61 зн.</span>1. close @cherrydotfun
+2. inspect the call
+3. cancel step one</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|gpt-5.6-sol|3" data-model="gpt-5.6-sol"><span><span class="pat">mini dialogue · 53 зн.</span>“where’s the chart?”
+“inside the chat.”
+@cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-4|gpt-5.6-sol|4" data-model="gpt-5.6-sol"><span><span class="pat">talk to the project by tag · 47 зн.</span>why do calls come with receipts, @cherrydotfun?</span></label>
+</div>
+</div></section>
+<section class="meme" id="cherry-5">
+<div><img src="images/cherry-5.jpg" alt="cherry-5"><div><b>cherry-5</b> · карточка: gemini-3.8-flash-high, 32 с</div><label class="cardflag"><input type="checkbox" class="cardbad" data-meme="cherry-5"> карточка мимо картинки</label></div>
+<dl class="card">
+<dt>Что на картинке</dt><dd style='white-space:pre-wrap'>A brown dog basks in warm golden hour sunlight with closed eyes, radiating pure serenity and relief.</dd>
+<dt>Текст на картинке</dt><dd style='white-space:pre-wrap'>Finally, everything I need is in one app</dd>
+<dt>В чём шутка</dt><dd style='white-space:pre-wrap'>The humor comes from portraying the overwhelming relief of app consolidation through a dog experiencing pure, unbothered bliss. It exaggerates the sensory peace a trader feels when they finally stop juggling multiple chaotic tools.</dd>
+<dt>Боль или эмоция</dt><dd style='white-space:pre-wrap'>App fatigue and missed trade entries caused by scrambling across separate chat groups, charting sites, DEX interfaces, and wallet popups.</dd>
+<dt>Фича или факт проекта</dt><dd style='white-space:pre-wrap'>[cherry_004] Everywhere else a call takes four apps — the chat, the chart, the DEX and the wallet — and the entry dies somewhere between them. In Cherry it never leaves one screen.</dd>
+<dt>Примеры подписей от карточки</dt><dd style='white-space:pre-wrap'>· Trading feels peaceful on @cherrydotfun
+· Everything on one screen with @cherrydotfun
+· No more app hopping on @cherrydotfun
+· The entire trade inside @cherrydotfun
+· One screen is enough @cherrydotfun</dd>
+</dl>
+<div class="models">
+<div class="model"><h3>Gemini 3.8 Flash <small>(22 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|gemini-3.8-flash-high|0" data-model="gemini-3.8-flash-high"><span><span class="pat">character voice · 36 зн.</span>closed every other tab @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|gemini-3.8-flash-high|1" data-model="gemini-3.8-flash-high"><span><span class="pat">scene label with a colon · 31 зн.</span>degen resting on @cherrydotfun:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|gemini-3.8-flash-high|2" data-model="gemini-3.8-flash-high"><span><span class="pat">POV frame · 38 зн.</span>pov: one tab was enough. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|gemini-3.8-flash-high|3" data-model="gemini-3.8-flash-high"><span><span class="pat">talk to the project by tag · 40 зн.</span>make it this quiet forever @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|gemini-3.8-flash-high|4" data-model="gemini-3.8-flash-high"><span><span class="pat">setup and turn · 69 зн.</span>thought i needed five monitors.
+turns out i just needed @cherrydotfun</span></label>
+</div>
+<div class="model"><h3>Opus 4.6 Thinking <small>(5 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|claude-opus-4-6-thinking|0" data-model="claude-opus-4-6-thinking"><span><span class="pat">character voice · 38 зн.</span>i stopped tab-switching. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|claude-opus-4-6-thinking|1" data-model="claude-opus-4-6-thinking"><span><span class="pat">scene label with a colon · 54 зн.</span>trader on @cherrydotfun after closing four other apps:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|claude-opus-4-6-thinking|2" data-model="claude-opus-4-6-thinking"><span><span class="pat">POV frame · 48 зн.</span>pov you just bought from the chat. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|claude-opus-4-6-thinking|3" data-model="claude-opus-4-6-thinking"><span><span class="pat">setup and turn · 103 зн.</span>used to need a group chat, a chart site, a dex and a wallet open at once. now i just open @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|claude-opus-4-6-thinking|4" data-model="claude-opus-4-6-thinking"><span><span class="pat">talk to the project by tag · 41 зн.</span>@cherrydotfun why is trading peaceful now<span class="flag">тег первым</span></span></label>
+</div>
+<div class="model"><h3>Grok 4.6 <small>(82 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|grok-4.6|0" data-model="grok-4.6"><span><span class="pat">character voice · 40 зн.</span>my trades feel peaceful on @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|grok-4.6|1" data-model="grok-4.6"><span><span class="pat">scene label with a colon · 52 зн.</span>brown dog in bliss after the trade on @cherrydotfun:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|grok-4.6|2" data-model="grok-4.6"><span><span class="pat">POV frame · 47 зн.</span>feeling the warmth after my trade @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|grok-4.6|3" data-model="grok-4.6"><span><span class="pat">trying it on · 56 зн.</span>me closing my eyes after the app mess ends @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|grok-4.6|4" data-model="grok-4.6"><span><span class="pat">question to complete · 47 зн.</span>which ticker are you trading next @cherrydotfun</span></label>
+</div>
+<div class="model"><h3>GPT-5.6 SOL medium <small>(16 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|gpt-5.6-sol|0" data-model="gpt-5.6-sol"><span><span class="pat">character voice · 41 зн.</span>i sign where the call lands @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|gpt-5.6-sol|1" data-model="gpt-5.6-sol"><span><span class="pat">scene label with a colon · 35 зн.</span>the @cherrydotfun trader, tab-free:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|gpt-5.6-sol|2" data-model="gpt-5.6-sol"><span><span class="pat">POV frame · 38 зн.</span>pov: the entry survives. @cherrydotfun</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|gpt-5.6-sol|3" data-model="gpt-5.6-sol"><span><span class="pat">parody of instructions · 38 зн.</span>open @cherrydotfun
+stop opening things</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="cherry-5|gpt-5.6-sol|4" data-model="gpt-5.6-sol"><span><span class="pat">talk to the project by tag · 39 зн.</span>where did my dex tab go, @cherrydotfun?</span></label>
+</div>
+</div></section>
+<section class="meme" id="battletown-1">
+<div><img src="images/battletown-1.jpg" alt="battletown-1"><div><b>battletown-1</b> · карточка: gemini-3.8-flash-high, 20 с</div><label class="cardflag"><input type="checkbox" class="cardbad" data-meme="battletown-1"> карточка мимо картинки</label></div>
+<dl class="card">
+<dt>Что на картинке</dt><dd style='white-space:pre-wrap'>Seong Gi-hun from Squid Game screams desperately while surrounded by floating pixel-art tanks.</dd>
+<dt>Текст на картинке</dt><dd style='white-space:pre-wrap'>Haven’t we all?
+I have played these games before!</dd>
+<dt>В чём шутка</dt><dd style='white-space:pre-wrap'>It contrasts dramatic Squid Game survival tension with pure childhood nostalgia for retro arcade tank combat.</dd>
+<dt>Боль или эмоция</dt><dd style='white-space:pre-wrap'>Exhaustion with overcomplicated crypto games and nostalgia for simple, skill-based retro arcade action.</dd>
+<dt>Фича или факт проекта</dt><dd style='white-space:pre-wrap'>bt_001</dd>
+<dt>Примеры подписей от карточки</dt><dd style='white-space:pre-wrap'>· Classic arcade action at @BattleTownCom
+· Relive the retro battles @BattleTownCom
+· Pixel tanks return with @BattleTownCom
+· Old school arcade combat @BattleTownCom
+· Pure nostalgia reborn via @BattleTownCom</dd>
+</dl>
+<div class="models">
+<div class="model"><h3>Gemini 3.8 Flash <small>(18 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|gemini-3.8-flash-high|0" data-model="gemini-3.8-flash-high"><span><span class="pat">character voice · 37 зн.</span>just let me find cover @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|gemini-3.8-flash-high|1" data-model="gemini-3.8-flash-high"><span><span class="pat">scene label with a colon · 38 зн.</span>veteran trapped inside @BattleTownCom:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|gemini-3.8-flash-high|2" data-model="gemini-3.8-flash-high"><span><span class="pat">POV frame · 45 зн.</span>pov: your first browser match. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|gemini-3.8-flash-high|3" data-model="gemini-3.8-flash-high"><span><span class="pat">setup and turn · 66 зн.</span>swore i retired from retro shooters.
+then i opened @BattleTownCom.</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|gemini-3.8-flash-high|4" data-model="gemini-3.8-flash-high"><span><span class="pat">talk to the project by tag · 43 зн.</span>make the pixel shells slower @BattleTownCom</span></label>
+</div>
+<div class="model"><h3>Opus 4.6 Thinking <small>(6 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|claude-opus-4-6-thinking|0" data-model="claude-opus-4-6-thinking"><span><span class="pat">character voice · 34 зн.</span>i survived worse at @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|claude-opus-4-6-thinking|1" data-model="claude-opus-4-6-thinking"><span><span class="pat">scene label with a colon · 46 зн.</span>man who forgot @BattleTownCom has pixel tanks:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|claude-opus-4-6-thinking|2" data-model="claude-opus-4-6-thinking"><span><span class="pat">POV frame · 57 зн.</span>pov you remember four buttons were enough. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|claude-opus-4-6-thinking|3" data-model="claude-opus-4-6-thinking"><span><span class="pat">setup and turn · 126 зн.</span>spent years learning complex crypto game mechanics just to realize all i wanted was pixel tanks in a browser at @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|claude-opus-4-6-thinking|4" data-model="claude-opus-4-6-thinking"><span><span class="pat">talk to the project by tag · 62 зн.</span>@BattleTownCom why does this feel more intense than squid game<span class="flag">тег первым</span></span></label>
+</div>
+<div class="model"><h3>Grok 4.6 <small>(83 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|grok-4.6|0" data-model="grok-4.6"><span><span class="pat">character voice · 48 зн.</span>pixel tanks got me screaming here @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|grok-4.6|1" data-model="grok-4.6"><span><span class="pat">scene label with a colon · 88 зн.</span>seong gi-hun screaming desperately surrounded by floating pixel tanks at @BattleTownCom:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|grok-4.6|2" data-model="grok-4.6"><span><span class="pat">pov frame · 90 зн.</span>you&#x27;re screaming desperately while pixel tanks surround you in the browser. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|grok-4.6|3" data-model="grok-4.6"><span><span class="pat">trying it on · 84 зн.</span>i&#x27;m trying to blast these pixel tanks but they&#x27;re floating everywhere @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|grok-4.6|4" data-model="grok-4.6"><span><span class="pat">question to complete · 75 зн.</span>which one would you pick to fight these floating pixel tanks @BattleTownCom</span></label>
+</div>
+<div class="model"><h3>GPT-5.6 SOL medium <small>(39 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|gpt-5.6-sol|0" data-model="gpt-5.6-sol"><span><span class="pat">character voice · 30 зн.</span>i trust my aim, @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|gpt-5.6-sol|1" data-model="gpt-5.6-sol"><span><span class="pat">scene label with a colon · 42 зн.</span>gi-hun, browser battler at @BattleTownCom:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|gpt-5.6-sol|2" data-model="gpt-5.6-sol"><span><span class="pat">POV frame · 47 зн.</span>pov: crypto meets muscle memory. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|gpt-5.6-sol|3" data-model="gpt-5.6-sol"><span><span class="pat">setup and turn · 75 зн.</span>i expected another crypto manual.
+then @BattleTownCom brought four buttons.</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-1|gpt-5.6-sol|4" data-model="gpt-5.6-sol"><span><span class="pat">talk to the project by tag · 35 зн.</span>keep it skill-first, @BattleTownCom</span></label>
+</div>
+</div></section>
+<section class="meme" id="battletown-2">
+<div><img src="images/battletown-2.jpg" alt="battletown-2"><div><b>battletown-2</b> · карточка: gemini-3.8-flash-high, 29 с</div><label class="cardflag"><input type="checkbox" class="cardbad" data-meme="battletown-2"> карточка мимо картинки</label></div>
+<dl class="card">
+<dt>Что на картинке</dt><dd style='white-space:pre-wrap'>A lineup of tanks across various rarity ranks surrounds a mystery silhouette tank against a rugged landscape. Slogans and tier labels showcase visual progression.</dd>
+<dt>Текст на картинке</dt><dd style='white-space:pre-wrap'>When you meet up with your friends after a long time apart
+BATTLE TOWN
+EVERY TANK HAS A STORY
+RECRUIT VETERAN ELITE ? MASTER CHAMPION LEGENDARY
+UNLOCK UPGRADE BATTLE PROGRESS LEGACY</dd>
+<dt>В чём шутка</dt><dd style='white-space:pre-wrap'>It compares reuniting with old peers to an mismatched game lobby where everyone took radically different life paths, including one complete wildcard.</dd>
+<dt>Боль или эмоция</dt><dd style='white-space:pre-wrap'>Comparing social status and wallet flexes against peers, alongside fear of cosmetic elitism in games.</dd>
+<dt>Фича или факт проекта</dt><dd style='white-space:pre-wrap'>[bt_007] A $50,000 tank and a free one shoot exactly the same in ranked - the difference is paint.</dd>
+<dt>Примеры подписей от карточки</dt><dd style='white-space:pre-wrap'>· Reuniting the old crew in @BattleTownCom
+· Pick your true rank with @BattleTownCom
+· Every squad looks like this in @BattleTownCom
+· Rolling up with different builds in @BattleTownCom
+· Spot the wildcard friend in @BattleTownCom</dd>
+</dl>
+<div class="models">
+<div class="model"><h3>Gemini 3.8 Flash <small>(19 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|gemini-3.8-flash-high|0" data-model="gemini-3.8-flash-high"><span><span class="pat">character voice · 34 зн.</span>i shoot the same in @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|gemini-3.8-flash-high|1" data-model="gemini-3.8-flash-high"><span><span class="pat">POV frame · 46 зн.</span>pov: showing up in basic paint. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|gemini-3.8-flash-high|2" data-model="gemini-3.8-flash-high"><span><span class="pat">question to complete · 39 зн.</span>which friend are you in @BattleTownCom?</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|gemini-3.8-flash-high|3" data-model="gemini-3.8-flash-high"><span><span class="pat">setup and turn · 88 зн.</span>he spent weeks unlocking rare skins.
+my unpainted hull still wiped him in @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|gemini-3.8-flash-high|4" data-model="gemini-3.8-flash-high"><span><span class="pat">talk to the project by tag · 44 зн.</span>does fancy paint fix bad aim @BattleTownCom?</span></label>
+</div>
+<div class="model"><h3>Opus 4.6 Thinking <small>(5 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|claude-opus-4-6-thinking|0" data-model="claude-opus-4-6-thinking"><span><span class="pat">character voice · 42 зн.</span>i&#x27;m the question mark tank. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|claude-opus-4-6-thinking|1" data-model="claude-opus-4-6-thinking"><span><span class="pat">POV frame · 89 зн.</span>pov you&#x27;re the mystery silhouette and your crew all ranked up without you. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|claude-opus-4-6-thinking|2" data-model="claude-opus-4-6-thinking"><span><span class="pat">question to complete · 35 зн.</span>which one are you at @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|claude-opus-4-6-thinking|3" data-model="claude-opus-4-6-thinking"><span><span class="pat">mini dialogue · 61 зн.</span>&quot;nice skin&quot;
+&quot;thanks it does nothing&quot;
+&quot;exactly&quot;
+@BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|claude-opus-4-6-thinking|4" data-model="claude-opus-4-6-thinking"><span><span class="pat">setup and turn · 106 зн.</span>thought my friend quit gaming forever, turns out he just spent three years picking paint at @BattleTownCom</span></label>
+</div>
+<div class="model"><h3>Grok 4.6 <small>(131 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|grok-4.6|0" data-model="grok-4.6"><span><span class="pat">character voice · 38 зн.</span>this one&#x27;s my old buddy @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|grok-4.6|1" data-model="grok-4.6"><span><span class="pat">scene label with a colon · 48 зн.</span>the old crew in mismatched ranks @BattleTownCom:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|grok-4.6|2" data-model="grok-4.6"><span><span class="pat">POV frame · 78 зн.</span>finally standing next to my buddy who just unlocked a new tank. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|grok-4.6|3" data-model="grok-4.6"><span><span class="pat">question to complete · 58 зн.</span>which one of these is your wildcard friend @BattleTownCom?</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|grok-4.6|4" data-model="grok-4.6"><span><span class="pat">setup and turn · 131 зн.</span>catching up with the old crew from way back when suddenly the lobby is full of tanks
+but it&#x27;s just paint and stories @BattleTownCom</span></label>
+</div>
+<div class="model"><h3>GPT-5.6 SOL medium <small>(32 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|gpt-5.6-sol|0" data-model="gpt-5.6-sol"><span><span class="pat">character voice · 28 зн.</span>i run on aim, @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|gpt-5.6-sol|1" data-model="gpt-5.6-sol"><span><span class="pat">scene label with a colon · 34 зн.</span>cosmetic equals at @BattleTownCom:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|gpt-5.6-sol|2" data-model="gpt-5.6-sol"><span><span class="pat">POV frame · 45 зн.</span>pov: your free tank hits back. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|gpt-5.6-sol|3" data-model="gpt-5.6-sol"><span><span class="pat">mini dialogue · 43 зн.</span>&quot;pricey paint?&quot;
+&quot;same shot.&quot;
+@BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-2|gpt-5.6-sol|4" data-model="gpt-5.6-sol"><span><span class="pat">talk to the project by tag · 49 зн.</span>can browser tanks stay this fair, @BattleTownCom?</span></label>
+</div>
+</div></section>
+<section class="meme" id="battletown-3">
+<div><img src="images/battletown-3.jpg" alt="battletown-3"><div><b>battletown-3</b> · карточка: gemini-3.8-flash-high, 19 с</div><label class="cardflag"><input type="checkbox" class="cardbad" data-meme="battletown-3"> карточка мимо картинки</label></div>
+<dl class="card">
+<dt>Что на картинке</dt><dd style='white-space:pre-wrap'>The classic High Expectations Asian Father meme set against an eight-paneled green sunburst background.</dd>
+<dt>Текст на картинке</dt><dd style='white-space:pre-wrap'>You won at BattleTown?
+
+Well, at least you win somewhere, son</dd>
+<dt>В чём шутка</dt><dd style='white-space:pre-wrap'>A strict parent offers reluctant praise, acknowledging a pure skill-based win when everything else in life disappoints.</dd>
+<dt>Боль или эмоция</dt><dd style='white-space:pre-wrap'>Frustration with pay-to-win mechanics and portfolio losses where personal skill makes no difference.</dd>
+<dt>Фича или факт проекта</dt><dd style='white-space:pre-wrap'>[bt_007] A $50,000 tank and a free one shoot exactly the same in ranked - the difference is paint.</dd>
+<dt>Примеры подписей от карточки</dt><dd style='white-space:pre-wrap'>· Pure skill counts on @BattleTownCom
+· Finally winning matches in @BattleTownCom
+· Dad approved my @BattleTownCom victory
+· Securing honest victories on @BattleTownCom
+· My aim carries @BattleTownCom</dd>
+</dl>
+<div class="models">
+<div class="model"><h3>Gemini 3.8 Flash <small>(32 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|gemini-3.8-flash-high|0" data-model="gemini-3.8-flash-high"><span><span class="pat">character voice · 37 зн.</span>show me first place on @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|gemini-3.8-flash-high|1" data-model="gemini-3.8-flash-high"><span><span class="pat">scene label with a colon · 43 зн.</span>father reviewing a rare @BattleTownCom win:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|gemini-3.8-flash-high|2" data-model="gemini-3.8-flash-high"><span><span class="pat">POV frame · 45 зн.</span>pov: your aim finally carried.
+@BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|gemini-3.8-flash-high|3" data-model="gemini-3.8-flash-high"><span><span class="pat">setup and turn · 65 зн.</span>red charts all morning.
+flawless arcade rounds on @BattleTownCom.</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|gemini-3.8-flash-high|4" data-model="gemini-3.8-flash-high"><span><span class="pat">talk to the project by tag · 37 зн.</span>tell him skill matters @BattleTownCom</span></label>
+</div>
+<div class="model"><h3>Opus 4.6 Thinking <small>(5 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|claude-opus-4-6-thinking|0" data-model="claude-opus-4-6-thinking"><span><span class="pat">character voice · 28 зн.</span>i only win at @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|claude-opus-4-6-thinking|1" data-model="claude-opus-4-6-thinking"><span><span class="pat">mini dialogue · 62 зн.</span>&quot;what did you win?&quot;
+&quot;a fair fight&quot;
+&quot;impossible&quot;
+@BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|claude-opus-4-6-thinking|2" data-model="claude-opus-4-6-thinking"><span><span class="pat">setup and turn · 107 зн.</span>lost my portfolio, lost my sleep, lost my streak. then i played @BattleTownCom and my aim actually mattered</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|claude-opus-4-6-thinking|3" data-model="claude-opus-4-6-thinking"><span><span class="pat">talk to the project by tag · 70 зн.</span>@BattleTownCom why does this feel like the only honest win i have left<span class="flag">тег первым</span></span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|claude-opus-4-6-thinking|4" data-model="claude-opus-4-6-thinking"><span><span class="pat">scene label with a colon · 46 зн.</span>dad reviewing my @BattleTownCom ranked record:</span></label>
+</div>
+<div class="model"><h3>Grok 4.6 <small>(102 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|grok-4.6|0" data-model="grok-4.6"><span><span class="pat">character voice · 41 зн.</span>just won my first match on @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|grok-4.6|1" data-model="grok-4.6"><span><span class="pat">scene label with a colon · 43 зн.</span>the son who secured the win: @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|grok-4.6|2" data-model="grok-4.6"><span><span class="pat">POV frame · 60 зн.</span>you feel the rush of landing the perfect @BattleTownCom shot</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|grok-4.6|3" data-model="grok-4.6"><span><span class="pat">trying it on · 55 зн.</span>trying to earn dad&#x27;s approval with a @BattleTownCom win</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|grok-4.6|4" data-model="grok-4.6"><span><span class="pat">question to complete · 44 зн.</span>who&#x27;s the next son to win on @BattleTownCom?</span></label>
+</div>
+<div class="model"><h3>GPT-5.6 SOL medium <small>(35 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|gpt-5.6-sol|0" data-model="gpt-5.6-sol"><span><span class="pat">character voice · 39 зн.</span>my aim does the talking, @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|gpt-5.6-sol|1" data-model="gpt-5.6-sol"><span><span class="pat">scene label with a colon · 44 зн.</span>strict dad, aim-convinced at @BattleTownCom:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|gpt-5.6-sol|2" data-model="gpt-5.6-sol"><span><span class="pat">POV frame · 42 зн.</span>pov: your wallet can&#x27;t aim. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|gpt-5.6-sol|3" data-model="gpt-5.6-sol"><span><span class="pat">trying it on · 50 зн.</span>me flexing paint, still whiffing at @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-3|gpt-5.6-sol|4" data-model="gpt-5.6-sol"><span><span class="pat">setup and turn · 46 зн.</span>i blamed the tank
+@BattleTownCom blamed my aim</span></label>
+</div>
+</div></section>
+<section class="meme" id="battletown-4">
+<div><img src="images/battletown-4.jpg" alt="battletown-4"><div><b>battletown-4</b> · карточка: gemini-3.8-flash-high, 18 с</div><label class="cardflag"><input type="checkbox" class="cardbad" data-meme="battletown-4"> карточка мимо картинки</label></div>
+<dl class="card">
+<dt>Что на картинке</dt><dd style='white-space:pre-wrap'>A large yellow mascot strides across a sunny landscape with two smaller companion mascots, sporting a BATTLE TOWN logo on its chest.</dd>
+<dt>Текст на картинке</dt><dd style='white-space:pre-wrap'>THIS IS US HEADING TO THE BATTLE TOWN UNDERGROUND TANK CLUB WITH THE BOYS</dd>
+<dt>В чём шутка</dt><dd style='white-space:pre-wrap'>The absurdly stoic, cartoonish mascots create comedy by treating a casual retro tank game session like an intense, secretive syndicate walkout.</dd>
+<dt>Боль или эмоция</dt><dd style='white-space:pre-wrap'>Exhaustion with bloated, unfun Web3 projects and longing for straightforward multiplayer fun with friends.</dd>
+<dt>Фича или факт проекта</dt><dd style='white-space:pre-wrap'>The closed-beta build is ready; public access is not open yet. [bt_002]</dd>
+<dt>Примеры подписей от карточки</dt><dd style='white-space:pre-wrap'>· Squad heading over to @BattleTownCom
+· Rolling deep into @BattleTownCom today
+· Ready for battle with @BattleTownCom
+· Meeting the crew at @BattleTownCom
+· Pure arcade energy with @BattleTownCom</dd>
+</dl>
+<div class="models">
+<div class="model"><h3>Gemini 3.8 Flash <small>(27 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|gemini-3.8-flash-high|0" data-model="gemini-3.8-flash-high"><span><span class="pat">character voice · 36 зн.</span>we strictly march for @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|gemini-3.8-flash-high|1" data-model="gemini-3.8-flash-high"><span><span class="pat">POV frame · 42 зн.</span>pov: rolling up for scrims. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|gemini-3.8-flash-high|2" data-model="gemini-3.8-flash-high"><span><span class="pat">mini dialogue · 47 зн.</span>- got your aim ready?
+- always.
+
+@BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|gemini-3.8-flash-high|3" data-model="gemini-3.8-flash-high"><span><span class="pat">setup and turn · 104 зн.</span>thought we were doing serious crypto business today.
+the squad just wanted pixel tanks at @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|gemini-3.8-flash-high|4" data-model="gemini-3.8-flash-high"><span><span class="pat">talk to the project by tag · 38 зн.</span>save three spots for us @BattleTownCom</span></label>
+</div>
+<div class="model"><h3>Opus 4.6 Thinking <small>(9 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|claude-opus-4-6-thinking|0" data-model="claude-opus-4-6-thinking"><span><span class="pat">character voice · 35 зн.</span>we walk like this to @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|claude-opus-4-6-thinking|1" data-model="claude-opus-4-6-thinking"><span><span class="pat">mini dialogue · 84 зн.</span>&quot;where are we going&quot;
+&quot;closed beta&quot;
+&quot;it&#x27;s not even open yet&quot;
+&quot;exactly&quot;
+@BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|claude-opus-4-6-thinking|2" data-model="claude-opus-4-6-thinking"><span><span class="pat">POV frame · 63 зн.</span>pov you found the crew that still plays for fun. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|claude-opus-4-6-thinking|3" data-model="claude-opus-4-6-thinking"><span><span class="pat">question to complete · 47 зн.</span>which one of you is the third at @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|claude-opus-4-6-thinking|4" data-model="claude-opus-4-6-thinking"><span><span class="pat">setup and turn · 103 зн.</span>told the boys we had plans tonight, now we&#x27;re marching to @BattleTownCom like it&#x27;s a military operation</span></label>
+</div>
+<div class="model"><h3>Grok 4.6 <small>(100 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|grok-4.6|0" data-model="grok-4.6"><span><span class="pat">character voice · 48 зн.</span>i&#x27;m crushing ai rounds in browser @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|grok-4.6|1" data-model="grok-4.6"><span><span class="pat">scene label with a colon · 60 зн.</span>the mascots strolling in browser battle with @BattleTownCom:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|grok-4.6|2" data-model="grok-4.6"><span><span class="pat">POV frame · 70 зн.</span>standing next to the large yellow mascot with the crew. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|grok-4.6|3" data-model="grok-4.6"><span><span class="pat">trying it on · 75 зн.</span>trying to keep up with the giant yellow mascot and his squad @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|grok-4.6|4" data-model="grok-4.6"><span><span class="pat">question to complete · 52 зн.</span>who&#x27;s the fourth mascot in this crew? @BattleTownCom</span></label>
+</div>
+<div class="model"><h3>GPT-5.6 SOL medium <small>(25 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|gpt-5.6-sol|0" data-model="gpt-5.6-sol"><span><span class="pat">character voice · 38 зн.</span>i came for closed beta, @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|gpt-5.6-sol|1" data-model="gpt-5.6-sol"><span><span class="pat">scene label with a colon · 39 зн.</span>closed-beta hopefuls at @BattleTownCom:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|gpt-5.6-sol|2" data-model="gpt-5.6-sol"><span><span class="pat">POV frame · 50 зн.</span>pov: your browser has battle plans. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|gpt-5.6-sol|3" data-model="gpt-5.6-sol"><span><span class="pat">trying it on · 39 зн.</span>me rehearsing for @BattleTownCom access</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-4|gpt-5.6-sol|4" data-model="gpt-5.6-sol"><span><span class="pat">setup and turn · 65 зн.</span>thought we had access.
+turns out we&#x27;re just early, @BattleTownCom</span></label>
+</div>
+</div></section>
+<section class="meme" id="battletown-5">
+<div><img src="images/battletown-5.jpg" alt="battletown-5"><div><b>battletown-5</b> · карточка: gemini-3.8-flash-high, 22 с</div><label class="cardflag"><input type="checkbox" class="cardbad" data-meme="battletown-5"> карточка мимо картинки</label></div>
+<dl class="card">
+<dt>Что на картинке</dt><dd style='white-space:pre-wrap'>A hand labeled with the BATTLE TOWN logo halts a row of falling dominoes before they collapse. The text at the bottom marks the threatened outcome as the nervous system.</dd>
+<dt>Текст на картинке</dt><dd style='white-space:pre-wrap'>BATTLE TOWN My nervous system</dd>
+<dt>В чём шутка</dt><dd style='white-space:pre-wrap'>Casual arcade battles intervene to stop the cascading stresses of crypto markets and daily life from wrecking mental peace.</dd>
+<dt>Боль или эмоция</dt><dd style='white-space:pre-wrap'>Market anxiety, complex Web3 stress, and competitive burnout.</dd>
+<dt>Фича или факт проекта</dt><dd style='white-space:pre-wrap'>[bt_001] BATTLE TOWN is a WebGL pixel-art arcade tank game that runs in the browser.</dd>
+<dt>Примеры подписей от карточки</dt><dd style='white-space:pre-wrap'>· Pure arcade relief with @BattleTownCom
+· Reset your day on @BattleTownCom
+· Quick browser combat via @BattleTownCom
+· Saving my sanity with @BattleTownCom
+· Clean tank battles on @BattleTownCom</dd>
+</dl>
+<div class="models">
+<div class="model"><h3>Gemini 3.8 Flash <small>(22 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|gemini-3.8-flash-high|0" data-model="gemini-3.8-flash-high"><span><span class="pat">character voice · 30 зн.</span>not on my watch @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|gemini-3.8-flash-high|1" data-model="gemini-3.8-flash-high"><span><span class="pat">POV frame · 40 зн.</span>pov: one bad candle away. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|gemini-3.8-flash-high|2" data-model="gemini-3.8-flash-high"><span><span class="pat">question to complete · 38 зн.</span>which domino fell first @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|gemini-3.8-flash-high|3" data-model="gemini-3.8-flash-high"><span><span class="pat">setup and turn · 81 зн.</span>thought i needed eight hours of sleep.
+just needed five minutes on @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|gemini-3.8-flash-high|4" data-model="gemini-3.8-flash-high"><span><span class="pat">talk to the project by tag · 36 зн.</span>keep that hand steady @BattleTownCom</span></label>
+</div>
+<div class="model"><h3>Opus 4.6 Thinking <small>(6 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|claude-opus-4-6-thinking|0" data-model="claude-opus-4-6-thinking"><span><span class="pat">character voice · 45 зн.</span>i stop the spiral around here. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|claude-opus-4-6-thinking|1" data-model="claude-opus-4-6-thinking"><span><span class="pat">scene label with a colon · 37 зн.</span>me after one round on @BattleTownCom:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|claude-opus-4-6-thinking|2" data-model="claude-opus-4-6-thinking"><span><span class="pat">talk to the project by tag · 47 зн.</span>@BattleTownCom how are pixel tanks this calming<span class="flag">тег первым</span></span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|claude-opus-4-6-thinking|3" data-model="claude-opus-4-6-thinking"><span><span class="pat">setup and turn · 102 зн.</span>opened my portfolio, felt the dominoes start falling, closed the tab and loaded @BattleTownCom instead</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|claude-opus-4-6-thinking|4" data-model="claude-opus-4-6-thinking"><span><span class="pat">mini dialogue · 74 зн.</span>&quot;the market is crashing&quot;
+&quot;hold on let me finish this round&quot;
+@BattleTownCom</span></label>
+</div>
+<div class="model"><h3>Grok 4.6 <small>(118 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|grok-4.6|0" data-model="grok-4.6"><span><span class="pat">scene label with a colon · 81 зн.</span>hand with logo halting dominoes : pixel tank battles in browser at @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|grok-4.6|1" data-model="grok-4.6"><span><span class="pat">POV frame · 88 зн.</span>you watching dominoes fall ready to hit the stop in pixel tank battles at @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|grok-4.6|2" data-model="grok-4.6"><span><span class="pat">setup and turn · 116 зн.</span>you start the day feeling the crypto stress building @BattleTownCom but then the turn is the tank battles in browser</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|grok-4.6|3" data-model="grok-4.6"><span><span class="pat">talk to the project by tag · 64 зн.</span>how do you keep your cool when crypto stress hits @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|grok-4.6|4" data-model="grok-4.6"><span><span class="pat">character voice · 50 зн.</span>whoa dominoes about to wreck my day @BattleTownCom</span></label>
+</div>
+<div class="model"><h3>GPT-5.6 SOL medium <small>(16 с)</small></h3>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|gpt-5.6-sol|0" data-model="gpt-5.6-sol"><span><span class="pat">character voice · 39 зн.</span>i brought browser tanks, @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|gpt-5.6-sol|1" data-model="gpt-5.6-sol"><span><span class="pat">scene label with a colon · 36 зн.</span>closed-beta pilot at @BattleTownCom:</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|gpt-5.6-sol|2" data-model="gpt-5.6-sol"><span><span class="pat">POV frame · 52 зн.</span>pov: four buttons beat doomscrolling. @BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|gpt-5.6-sol|3" data-model="gpt-5.6-sol"><span><span class="pat">mini dialogue · 40 зн.</span>&quot;browser?&quot;
+&quot;tank battle.&quot;
+@BattleTownCom</span></label>
+<label class="cap"><input type="checkbox" class="ok" data-id="battletown-5|gpt-5.6-sol|4" data-model="gpt-5.6-sol"><span><span class="pat">talk to the project by tag · 42 зн.</span>keep it four-button simple, @BattleTownCom</span></label>
+</div>
+</div></section>
+<h2>Итог</h2><textarea id="export" readonly></textarea>
+<script>
+const KEY='hq1307-marks';let marks={};try{marks=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+const boxes=[...document.querySelectorAll('input.ok')],bad=[...document.querySelectorAll('input.cardbad')];
+boxes.forEach(b=>{b.checked=!!marks[b.dataset.id];b.onchange=()=>{marks[b.dataset.id]=b.checked;save()}});
+bad.forEach(b=>{b.checked=!!marks['card|'+b.dataset.meme];b.onchange=()=>{marks['card|'+b.dataset.meme]=b.checked;save()}});
+function save(){try{localStorage.setItem(KEY,JSON.stringify(marks))}catch(e){}render()}
+function render(){const names={'gemini-3.8-flash-high':'Gemini 3.8 Flash','claude-opus-4-6-thinking':'Opus 4.6 Thinking','grok-4.6':'Grok 4.6','gpt-5.6-sol':'GPT-5.6 SOL'};
+const tot={},ok={};boxes.forEach(b=>{tot[b.dataset.model]=(tot[b.dataset.model]||0)+1;if(b.checked)ok[b.dataset.model]=(ok[b.dataset.model]||0)+1});
+let h='<span>Годных по моделям:</span>';const res={};for(const m in tot){res[names[m]]=(ok[m]||0)+'/'+tot[m];h+=`<span>${names[m]}: <b>${ok[m]||0}</b>/${tot[m]}</span>`}
+const badList=bad.filter(b=>b.checked).map(b=>b.dataset.meme);h+='<button onclick="copy()">Скопировать итог</button>';document.getElementById('sum').innerHTML=h;
+const chosen=boxes.filter(b=>b.checked).map(b=>b.dataset.id);document.getElementById('export').value=JSON.stringify({by_model:res,cards_bad:badList,chosen},null,0)}
+function copy(){const t=document.getElementById('export');t.select();document.execCommand('copy')}
+render();
+</script></body></html>
