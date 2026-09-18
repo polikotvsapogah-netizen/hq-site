@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test meme post #54354 — GEM_MEGA_MEME</title>
+<meta name="description" content="Meme post preview — English and Russian versions.">
+<script>
+(function () {
+  var ru = /(^|[?&])ru(&|$)/.test(location.search);
+  document.documentElement.lang = ru ? "ru" : "en";
+  document.documentElement.dataset.lang = ru ? "ru" : "en";
+})();
+</script>
+<style>
+  :root {
+    --bg:      oklch(0.145 0.012 258);
+    --surface: oklch(0.185 0.014 258);
+    --raised:  oklch(0.22 0.016 258);
+    --line:    oklch(0.30 0.02 258);
+    --ink:     oklch(0.93 0.005 258);
+    --muted:   oklch(0.70 0.015 258);
+    --cobalt:  oklch(0.68 0.13 258);
+    --sans: system-ui, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh;
+    background: var(--bg); color: var(--ink);
+    font: 17px/1.6 var(--sans);
+    display: flex; align-items: center; justify-content: center;
+    padding: 48px 20px;
+  }
+  .lang-switch {
+    position: fixed; top: 16px; right: 16px; z-index: 10;
+    font: 600 14px/1 var(--sans);
+    color: var(--ink); background: var(--raised);
+    border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 16px; cursor: pointer;
+  }
+  .lang-switch:hover { background: var(--surface); border-color: var(--cobalt); }
+  main { max-width: 640px; width: 100%; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line); border-radius: 14px;
+    padding: 36px 32px;
+  }
+  h1 { margin: 0 0 8px; font-size: 15px; font-weight: 600; letter-spacing: 0.04em;
+       text-transform: uppercase; color: var(--muted); }
+  blockquote {
+    margin: 20px 0 0; font-size: 26px; line-height: 1.35; font-weight: 600;
+    border: 0; padding: 0;
+  }
+  .meta { margin-top: 24px; font-size: 14px; color: var(--muted); }
+  .meta a { color: var(--cobalt); text-decoration: none; }
+  .meta a:hover { text-decoration: underline; }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; margin: -1px;
+    clip-path: inset(50%); overflow: hidden; white-space: nowrap;
+  }
+  [data-lang-block="en"] { display: none; }
+  [data-lang-block="ru"] { display: none; }
+  html[data-lang="en"] [data-lang-block="en"] { display: block; }
+  html[data-lang="ru"] [data-lang-block="ru"] { display: block; }
+</style>
+</head>
+<body>
+<button class="lang-switch" id="langSwitch" type="button">Русская версия</button>
+<main>
+  <article class="card">
+    <h1>@GEM_MEGA_MEME · quote post</h1>
+    <h2 class="visually-hidden" id="postHeading">Meme post — English and Russian versions</h2>
+
+    <div data-lang-block="en">
+      <blockquote>A ₿ear can win the short-term argument and still lose the long-term outcome.</blockquote>
+      <p class="meta">Quote of <a href="https://x.com/saylor/status/2100548699172520085">@saylor</a> ·
+        <a href="https://x.com/GEM_MEGA_MEME/status/2100610344469021101">post on X</a> · September 17, 2026</p>
+    </div>
+
+    <div data-lang-block="ru">
+      <blockquote>Медведь может выиграть спор на короткой дистанции — и всё равно проиграть в долгосрочном итоге.</blockquote>
+      <p class="meta">Цитата поста <a href="https://x.com/saylor/status/2100548699172520085">@saylor</a> ·
+        <a href="https://x.com/GEM_MEGA_MEME/status/2100610344469021101">пост в X</a> · 17 сентября 2026</p>
+    </div>
+  </article>
+</main>
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById("langSwitch");
+  var heading = document.getElementById("postHeading");
+  function apply(lang, push) {
+    root.lang = lang;
+    root.dataset.lang = lang;
+    btn.textContent = lang === "en" ? "Русская версия" : "English version";
+    heading.textContent = lang === "en"
+      ? "Meme post — English and Russian versions"
+      : "Мем-пост — английская и русская версии";
+    var q = lang === "ru" ? "?ru" : location.pathname;
+    if (push) history.replaceState(null, "", q);
+  }
+  btn.addEventListener("click", function () {
+    apply(root.dataset.lang === "en" ? "ru" : "en", true);
+  });
+  apply(root.dataset.lang || "en", false);
+})();
+</script>
+</body>
+</html>
